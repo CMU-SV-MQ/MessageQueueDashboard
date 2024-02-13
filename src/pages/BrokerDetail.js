@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 
-function DataFlow() {
+function BrokerDetail() {
   return (
     <div>
       <Header />
@@ -9,4 +9,4 @@ function DataFlow() {
   );
 }
 
-export default DataFlow;
+export default BrokerDetail;

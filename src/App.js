@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import MessageQueueAdmin from "./pages/MessageQueueAdmin";
-import DataFlow from "./pages/DataFlow";
+import Monitor from "./pages/Monitor";
+import BrokerDetail from "./pages/BrokerDetail";
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/message-queue-admin" element={<MessageQueueAdmin />} />
-          <Route path="/data-flow" element={<DataFlow />} />
+          <Route path="/message-queue-admin" element={<Monitor />} />
+          <Route path="/data-flow" element={<BrokerDetail />} />
         </Routes>
       </Router>
     </ChakraProvider>
