@@ -44,7 +44,6 @@ function Dashboard() {
   // Dummy killNode function
   const killNode = (nodeId) => {
     console.log(`Killing node ${nodeId}`);
-    // Here you would normally call a service to kill a node
   };
 
   return (

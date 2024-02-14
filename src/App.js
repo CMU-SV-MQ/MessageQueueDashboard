@@ -10,8 +10,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/message-queue-admin" element={<Monitor />} />
-          <Route path="/data-flow" element={<BrokerDetail />} />
+          <Route path="/monitor" element={<Monitor />} />
+          <Route path="/brokerDetail" element={<BrokerDetail />} />
         </Routes>
       </Router>
     </ChakraProvider>
