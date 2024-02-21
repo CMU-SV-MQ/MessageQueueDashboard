@@ -1,7 +1,16 @@
 import Header from "../components/Header";
 import ConsumerCard from "../components/ConsumerCard";
 import TopicCard from "../components/TopicCard";
-import { Box, Grid, GridItem, Center, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Center,
+  Text,
+  VStack,
+  Button,
+  Stack,
+} from "@chakra-ui/react";
 
 // dummy data
 const topics = [
@@ -19,6 +28,15 @@ function Monitor() {
   return (
     <Box>
       <Header />
+      <br></br>
+      <Stack direction="row" align="center">
+        <Box mr={6}></Box>
+        <a href="/relationshipView">
+          <Button colorScheme="blue" size="sm" variant="outline">
+            Relationship View
+          </Button>
+        </a>
+      </Stack>
       <Grid templateColumns="repeat(2, 1fr)" gap={6} p={6}>
         <GridItem>
           <Center>
