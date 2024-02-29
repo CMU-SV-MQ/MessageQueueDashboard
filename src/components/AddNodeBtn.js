@@ -28,7 +28,7 @@ function AddNodeBtn({ addNode }) {
               leftIcon={<HiPlus />}
               isLoading={isAdding}
             >
-              Add Node
+              Add Broker
             </Button>
           </PopoverTrigger>
           <PopoverContent>

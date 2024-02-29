@@ -26,13 +26,13 @@ function SettingsBtn({ settings, update }) {
     <Popover>
       <PopoverTrigger>
         <Button colorScheme="gray" size="md" leftIcon={<HiOutlineCog />}>
-          Settings
+          Reset Strategy
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Cluster Settings</PopoverHeader>
+        <PopoverHeader>Choose Partition Strategy</PopoverHeader>
         <PopoverBody>
           {Object.keys(settings).map((key, index) => {
             return (
