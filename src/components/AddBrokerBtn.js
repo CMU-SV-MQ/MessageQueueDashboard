@@ -14,7 +14,7 @@ import { useRef, useState } from "react";
 
 import PropTypes from "prop-types";
 
-function AddNodeBtn({ addNode }) {
+function AddBrokerBtn({ addNode }) {
   const initRef = useRef();
   const [isAdding, setIsAdding] = useState(false);
   return (
@@ -36,7 +36,7 @@ function AddNodeBtn({ addNode }) {
             <PopoverCloseButton />
             <PopoverHeader>Confirmation</PopoverHeader>
             <PopoverBody>
-              Are you sure you want to add a node?
+              Are you sure you want to add a broker?
               <Flex mt={4}>
                 <Button
                   colorScheme="green"
@@ -60,8 +60,8 @@ function AddNodeBtn({ addNode }) {
   );
 }
 
-AddNodeBtn.propTypes = {
+AddBrokerBtn.propTypes = {
   addNode: PropTypes.func.isRequired,
 };
 
-export default AddNodeBtn;
+export default AddBrokerBtn;

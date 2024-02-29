@@ -4,7 +4,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import NodeLabel from "./NodeLabel";
 import { HiOutlineX } from "react-icons/hi";
 
-function NodeCard({ nodeData, killNode }) {
+function BrokerCard({ nodeData, killNode }) {
   const [isAdding, setIsAdding] = useState(false);
   const bgColor = nodeData.isLeader ? "gray.500" : "gray.100";
   const contentColor = nodeData.isLeader ? "gray.50" : "gray.600";
@@ -59,13 +59,13 @@ function NodeCard({ nodeData, killNode }) {
           setIsAdding(false);
         }}
       >
-        Kill
+        Stop
       </Button>
     </Flex>
   );
 }
 
-NodeCard.propTypes = {
+BrokerCard.propTypes = {
   nodeData: PropTypes.shape({
     id: PropTypes.number.isRequired,
     isLeader: PropTypes.bool.isRequired,
@@ -76,4 +76,4 @@ NodeCard.propTypes = {
   killNode: PropTypes.func.isRequired,
 };
 
-export default NodeCard;
+export default BrokerCard;
