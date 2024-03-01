@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { HiOutlineCog } from "react-icons/hi";
 import {
-  Flex,
-  Text,
   Button,
   Popover,
   PopoverTrigger,
@@ -11,17 +9,26 @@ import {
   PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
-  Input,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-function SettingsBtn({ settings, update }) {
-  const fieldMap = {
-    heartbeat_duration: "Heartbeat Duration",
-    random_duration: "Random Duration",
-    timeout: "Timeout",
+function ResetStrategyBtn({ update }) {
+  // const fieldMap = {
+  //   heartbeat_duration: "Heartbeat Duration",
+  //   random_duration: "Random Duration",
+  //   timeout: "Timeout",
+  // };
+  // const [newSettings, setNewSettings] = useState({});
+
+  const [strategy, setStrategy] = useState("round-robin");
+
+  const handleUpdate = () => {
+    update(strategy);
   };
-  const [newSettings, setNewSettings] = useState({});
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -34,34 +41,16 @@ function SettingsBtn({ settings, update }) {
         <PopoverCloseButton />
         <PopoverHeader>Choose Partition Strategy</PopoverHeader>
         <PopoverBody>
-          {Object.keys(settings).map((key, index) => {
-            return (
-              <Flex key={index} flexDirection={"column"}>
-                <Text size="sm" fontWeight={"bold"}>
-                  {fieldMap[key]}
-                </Text>
-                <Input
-                  type="number"
-                  defaultValue={settings[key]}
-                  onChange={(e) => {
-                    const newSetting = { ...newSettings };
-                    // convert to number
-                    newSetting[key] = +e.target.value;
-                    setNewSettings(newSetting);
-                  }}
-                />
-              </Flex>
-            );
-          })}
-          <Button
-            mt="4"
-            colorScheme="blue"
-            isDisabled={Object.keys(newSettings).length === 0}
-            onClick={() => {
-              update(newSettings);
-            }}
-          >
-            Update
+          <RadioGroup onChange={setStrategy} value={strategy}>
+            <Stack direction="column">
+              <Radio value="round-robin">Round Robin</Radio>
+              <Radio value="range">Range</Radio>
+              <Radio value="fail-over">Fail Over</Radio>
+              <Radio value="sticky">Sticky</Radio>
+            </Stack>
+          </RadioGroup>
+          <Button mt="4" colorScheme="blue" onClick={handleUpdate}>
+            Reset
           </Button>
         </PopoverBody>
       </PopoverContent>
@@ -69,9 +58,9 @@ function SettingsBtn({ settings, update }) {
   );
 }
 
-SettingsBtn.propTypes = {
+ResetStrategyBtn.propTypes = {
   settings: PropTypes.object.isRequired,
   update: PropTypes.func.isRequired,
 };
 
-export default SettingsBtn;
+export default ResetStrategyBtn;

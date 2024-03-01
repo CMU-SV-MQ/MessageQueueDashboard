@@ -7,7 +7,7 @@ import AddBrokerBtn from "../components/AddBrokerBtn.js";
 import BrokerCard from "../components/BrokerCard.js";
 // import useSocket from "../hooks/useSocket.js";
 // import { getSocketStateColor, getSocketStateString } from "../utils/socket";
-import SettingsBtn from "../components/ResetStrategyBtn.js";
+import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
 import Header from "../components/Header";
 
 function Dashboard() {
@@ -20,7 +20,6 @@ function Dashboard() {
   // const [nodes, setNodes] = useState([]);
   // const socket = useSocket(''); // Placeholder for socket URL
 
-  // Dummy data for the NodeCards
   // const dummyNodes = [
   //   {
   //     id: 1,
@@ -144,15 +143,12 @@ function Dashboard() {
     }
   };
 
-  const resetBrokerStrategy = async () => {
+  const resetBrokerStrategy = async (selectedStrategy) => {
     try {
-      const response = await fetch(
-        "http://localhost:8080/broker/brokerStrategy/round-robin",
-        {
-          method: "POST",
-          // eslint-disable-next-line prettier/prettier
-        }
-      );
+      const endpoint = `http://localhost:8080/broker/brokerStrategy/${selectedStrategy}`;
+      const response = await fetch(endpoint, {
+        method: "POST",
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -161,7 +157,11 @@ function Dashboard() {
       const result = await response.json();
       console.log(result);
     } catch (error) {
-      console.error("Failed to reset broker strategy:", error);
+      console.error(
+        `Failed to set broker strategy to ${selectedStrategy}:`,
+        // eslint-disable-next-line prettier/prettier
+        error
+      );
     }
   };
 
@@ -186,7 +186,7 @@ function Dashboard() {
             >
               Refresh
             </Button>
-            <SettingsBtn settings={{}} update={resetBrokerStrategy} />
+            <ResetStrategyBtn settings={{}} update={resetBrokerStrategy} />
 
             <AddBrokerBtn addNode={addBroker} />
           </HStack>
