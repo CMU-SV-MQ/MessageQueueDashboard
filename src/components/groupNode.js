@@ -21,7 +21,6 @@ const GroupNode = ({ id, data, isConnectable }) => {
           position: "absolute",
           top: -25,
           left: 5,
-          // fontWeight: "bold",
           backgroundColor: "#fff",
           padding: "0 4px",
         }}

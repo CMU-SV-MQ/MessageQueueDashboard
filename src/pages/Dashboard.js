@@ -16,9 +16,7 @@ function Dashboard() {
   const [brokers, setBrokers] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
   // const [socketState, setSocketState] = useState(-1);
-  // const [clusterSettings, setClusterSettings] = useState({});
-  // const [nodes, setNodes] = useState([]);
-  // const socket = useSocket(''); // Placeholder for socket URL
+  // const socket = useSocket('');
 
   // const dummyNodes = [
   //   {
