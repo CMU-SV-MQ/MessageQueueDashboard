@@ -24,7 +24,7 @@ function HeaderMenu() {
           Relationship View
         </MenuItem>
         <MenuItem as="a" icon={<HiOutlineDatabase />} href="/brokerDetail">
-          Data Flow
+          Topic Detail
         </MenuItem>
       </MenuList>
     </Menu>

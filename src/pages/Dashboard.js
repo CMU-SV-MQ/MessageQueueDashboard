@@ -128,7 +128,7 @@ function Dashboard() {
       setLeader(leaderData);
       setAliveStatus(aliveData);
 
-      // TODO: Assuming aliveData is an array with the status of each node,
+      // TODO: assuming aliveData is an array with the status of each node. modify based on actual APIs
       const updatedNodes = aliveData.map((node) => {
         return {
           ...node,

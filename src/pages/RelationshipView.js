@@ -3,7 +3,12 @@
 /* eslint-disable prettier/prettier */
 import Header from "../components/Header";
 import React, { useMemo, useEffect } from "react";
-import ReactFlow, { useNodesState, useEdgesState, Handle } from "reactflow";
+import ReactFlow, {
+  useNodesState,
+  useEdgesState,
+  Handle,
+  MiniMap,
+} from "reactflow";
 import "reactflow/dist/style.css";
 import { topics, consumerGroups, relationships } from "../data";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
@@ -60,7 +65,6 @@ const nodeTypes = {
   group: GroupNode,
 };
 
-// Helper function to transform your data into React Flow elements
 const transformDataToElements = (topics, consumerGroups, relationships) => {
   let currentTopicY = 0;
   let currentConsumerGroupY = 0;
@@ -69,13 +73,21 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
   const edges = [];
 
   topics.forEach((topic, index) => {
-    const topicGroupHeight = (topic.partitions.length + 1) * 50;
+    const topicGroupHeight = (topic.partitions.length + 0.2) * 50;
     nodes.push({
       id: `group_${topic.id}`,
       type: "group",
       position: { x: columnXPosition.topics, y: currentTopicY },
       data: { label: topic.id },
-      style: { height: topicGroupHeight },
+      draggable: false,
+      style: {
+        height: topicGroupHeight,
+        backgroundColor: "gray.50",
+        borderColor: "gray",
+        borderRadius: "md",
+        boxShadow: "lg",
+        padding: "2",
+      },
     });
     currentTopicY += topicGroupHeight + groupSpacing;
 
@@ -85,6 +97,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
         type: "custom",
         position: { x: 10, y: pIndex * 50 + 10 },
         data: { label: partition },
+        draggable: false,
         parentNode: `group_${topic.id}`,
         extent: "parent",
       });
@@ -92,13 +105,21 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
   });
 
   consumerGroups.forEach((group, index) => {
-    const groupHeight = (group.consumers.length + 1) * 50;
+    const groupHeight = (group.consumers.length + 0.2) * 50;
     nodes.push({
       id: `group_${group.id}`,
       type: "group",
       position: { x: columnXPosition.consumerGroups, y: currentConsumerGroupY },
       data: { label: group.id },
-      style: { height: groupHeight },
+      draggable: false,
+      style: {
+        height: groupHeight,
+        backgroundColor: "gray.50",
+        borderColor: "gray",
+        borderRadius: "md",
+        boxShadow: "lg",
+        padding: "2",
+      },
     });
 
     currentConsumerGroupY += groupHeight + groupSpacing;
@@ -110,6 +131,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
         type: "custom",
         position: { x: 10, y: cIndex * 50 + 10 },
         data: { label: consumer },
+        draggable: false,
         parentNode: `group_${group.id}`,
         extent: "parent",
       });
@@ -132,7 +154,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
       style: { stroke: edgeColor },
     };
 
-    console.log("Creating edge:", edge);
+    // console.log("Creating edge:", edge);
     edges.push(edge);
   });
 
@@ -161,13 +183,13 @@ export default function App() {
           relationships
         );
         // Debugging: Log the transformed elements
-        console.log("Transformed Elements:", elements);
+        // console.log("Transformed Elements:", elements);
         return elements;
       }
       return { nodes: [], edges: [] };
     } catch (error) {
       // Log any errors that occur during transformation
-      console.error("Error transforming data:", error);
+      // console.error("Error transforming data:", error);
       return { nodes: [], edges: [] };
     }
   }, [topics, consumerGroups, relationships]);
@@ -187,8 +209,10 @@ export default function App() {
           nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          fitView // This can help ensure all nodes are visible within the viewport.
-        />
+          fitView
+        >
+          <MiniMap nodeStrokeWidth={3} />
+        </ReactFlow>
       </div>
     </ChakraProvider>
   );
