@@ -122,7 +122,6 @@ function Dashboard() {
   };
 
   const refreshData = async () => {
-    // Show a loading indicator here if you have one
     try {
       const [leaderData, aliveData] = await Promise.all([
         getBrokerLeader(),
@@ -132,20 +131,37 @@ function Dashboard() {
       setLeader(leaderData);
       setAliveStatus(aliveData);
 
-      // Assuming aliveData is an array with the status of each node,
-      // you would transform it to match your nodes state structure and update it:
+      // TODO: Assuming aliveData is an array with the status of each node,
       const updatedNodes = aliveData.map((node) => {
         return {
           ...node,
-          isLeader: node.id === leaderData.id, // Compare with leaderData to set the leader flag
+          isLeader: node.id === leaderData.id,
         };
       });
-      setBrokers(updatedNodes); // Update your nodes state with the new data
+      setBrokers(updatedNodes);
     } catch (error) {
       console.error("Error during refresh:", error);
-      // Handle the error, for example by showing a notification to the user
-    } finally {
-      // Hide loading indicator here if you showed one
+    }
+  };
+
+  const resetBrokerStrategy = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/broker/brokerStrategy/round-robin",
+        {
+          method: "POST",
+          // eslint-disable-next-line prettier/prettier
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error("Failed to reset broker strategy:", error);
     }
   };
 
@@ -170,7 +186,8 @@ function Dashboard() {
             >
               Refresh
             </Button>
-            <SettingsBtn settings={{}} update={() => {}} />
+            <SettingsBtn settings={{}} update={resetBrokerStrategy} />
+
             <AddBrokerBtn addNode={addBroker} />
           </HStack>
         </Flex>
