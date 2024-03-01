@@ -23,7 +23,7 @@ function AddBrokerBtn({ addNode }) {
         <>
           <PopoverTrigger>
             <Button
-              colorScheme="green"
+              colorScheme="yellow"
               size="md"
               leftIcon={<HiPlus />}
               isLoading={isAdding}
@@ -39,7 +39,7 @@ function AddBrokerBtn({ addNode }) {
               Are you sure you want to add a broker?
               <Flex mt={4}>
                 <Button
-                  colorScheme="green"
+                  colorScheme="yellow"
                   leftIcon={<HiCheck />}
                   isLoading={isAdding}
                   onClick={async () => {

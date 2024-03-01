@@ -9,7 +9,7 @@ import {
 function HeaderMenu() {
   return (
     <Menu>
-      <MenuButton as={Button} colorScheme="blue" leftIcon={<HiMenuAlt2 />}>
+      <MenuButton as={Button} colorScheme="yellow" leftIcon={<HiMenuAlt2 />}>
         Menu
       </MenuButton>
       <MenuList>

@@ -43,13 +43,21 @@ function ResetStrategyBtn({ update }) {
         <PopoverBody>
           <RadioGroup onChange={setStrategy} value={strategy}>
             <Stack direction="column">
-              <Radio value="round-robin">Round Robin</Radio>
-              <Radio value="range">Range</Radio>
-              <Radio value="fail-over">Fail Over</Radio>
-              <Radio value="sticky">Sticky</Radio>
+              <Radio colorScheme="yellow" value="round-robin">
+                Round Robin
+              </Radio>
+              <Radio colorScheme="yellow" value="range">
+                Range
+              </Radio>
+              <Radio colorScheme="yellow" value="fail-over">
+                Fail Over
+              </Radio>
+              <Radio colorScheme="yellow" value="sticky">
+                Sticky
+              </Radio>
             </Stack>
           </RadioGroup>
-          <Button mt="4" colorScheme="blue" onClick={handleUpdate}>
+          <Button mt="4" colorScheme="yellow" onClick={handleUpdate}>
             Reset
           </Button>
         </PopoverBody>
