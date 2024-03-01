@@ -14,10 +14,14 @@ function HeaderMenu() {
       </MenuButton>
       <MenuList>
         <MenuItem as="a" icon={<HiOutlineServer />} href="/">
-          Cluster Management
+          Broker Management
         </MenuItem>
-        <MenuItem as="a" icon={<HiOutlineAnnotation />} href="/monitor">
-          Topic Monitoring
+        <MenuItem
+          as="a"
+          icon={<HiOutlineAnnotation />}
+          href="/relationshipView"
+        >
+          Relationship View
         </MenuItem>
         <MenuItem as="a" icon={<HiOutlineDatabase />} href="/brokerDetail">
           Data Flow
