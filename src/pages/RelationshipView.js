@@ -13,7 +13,7 @@ import "reactflow/dist/style.css";
 import { topics, consumerGroups, relationships } from "../data";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import GroupNode from "../components/groupNode";
+import GroupNode from "../components/GroupNode";
 
 const columnXPosition = {
   topics: 100, // x position for topics column

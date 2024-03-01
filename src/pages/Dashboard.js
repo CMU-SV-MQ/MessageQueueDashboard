@@ -164,8 +164,8 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    refreshData(); // This will load initial data when the dashboard is first loaded
-  }, []); // The empty array ensures this effect only runs once on mount
+    refreshData();
+  }, []);
 
   return (
     <VStack spacing={4}>

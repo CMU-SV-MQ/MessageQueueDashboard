@@ -12,7 +12,7 @@ import {
   AccordionIcon,
   Badge,
   useDisclosure,
-  ModalCloseButton,
+  Heading,
   Stack,
   Text,
   Container,
@@ -39,9 +39,12 @@ function BrokerDetail() {
       <Header />
       <Container maxW="container.xl" pt={5}>
         <VStack spacing={4} align="stretch">
-          <Text fontSize="3xl" mb={4}>
+          {/* <Text fontSize="3xl" mb={4}>
             Topic Monitoring
-          </Text>
+          </Text> */}
+          <Heading as="h2" size="lg" color="gray.600" noOfLines={1}>
+            Topic Monitoring
+          </Heading>
           <Accordion allowMultiple>
             {DUMMY_TOPICS.map((topic, idx) => (
               <AccordionItem key={idx}>

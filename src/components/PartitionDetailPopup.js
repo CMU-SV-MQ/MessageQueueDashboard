@@ -13,7 +13,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-// Define dummy data for partition details
 const DUMMY_PARTITION_DETAILS = {
   messages: [
     "Message 1: This is a message from p0",
@@ -21,16 +20,15 @@ const DUMMY_PARTITION_DETAILS = {
     "Message 3: Yet another message from p0",
   ],
   commitIndex: [
-    "Message 1: This is a message from p0",
-    "Message 2: This is another message from p0",
+    "commitIndex 1: This is a commitIndex from p0",
+    "commitIndex 2: This is another commitIndex from p0",
   ],
   stashIndex: [
-    "Message 1: This is a message from p0",
-    "Message 2: This is another message from p0",
+    "stashIndex 1: This is a stashIndex from p0",
+    "stashIndex 2: This is another stashIndex from p0",
   ],
 };
 
-// Partition Details Modal Component
 const PartitionDetailsModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -61,9 +59,6 @@ const PartitionDetailsModal = ({ isOpen, onClose }) => {
           </VStack>
         </ModalBody>
         <ModalFooter />
-        {/* <ModalFooter>
-          <Button onClick={onClose}>Close</Button>
-        </ModalFooter> */}
       </ModalContent>
     </Modal>
   );

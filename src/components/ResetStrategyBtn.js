@@ -16,13 +16,6 @@ import {
 import PropTypes from "prop-types";
 
 function ResetStrategyBtn({ update }) {
-  // const fieldMap = {
-  //   heartbeat_duration: "Heartbeat Duration",
-  //   random_duration: "Random Duration",
-  //   timeout: "Timeout",
-  // };
-  // const [newSettings, setNewSettings] = useState({});
-
   const [strategy, setStrategy] = useState("round-robin");
 
   const handleUpdate = () => {
