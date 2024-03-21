@@ -4,7 +4,7 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import NodeLabel from "./NodeLabel";
 import { HiOutlineX } from "react-icons/hi";
 
-function BrokerCard({ nodeData, killNode }) {
+function BrokerCard({ nodeData, stopBroker }) {
   const [isAdding, setIsAdding] = useState(false);
   const bgColor = nodeData.isLeader ? "gray.500" : "gray.100";
   const contentColor = nodeData.isLeader ? "gray.50" : "gray.600";
@@ -34,7 +34,7 @@ function BrokerCard({ nodeData, killNode }) {
         alignItems={"center"}
       >
         <Text fontSize="4xl" fontWeight="700" color={contentColor}>
-          {nodeData.id}
+          {nodeData.brokerId}
         </Text>
       </Flex>
       <Flex
@@ -55,7 +55,7 @@ function BrokerCard({ nodeData, killNode }) {
         isLoading={isAdding}
         onClick={async () => {
           setIsAdding(true);
-          await killNode();
+          await stopBroker();
           setIsAdding(false);
         }}
       >
@@ -67,13 +67,13 @@ function BrokerCard({ nodeData, killNode }) {
 
 BrokerCard.propTypes = {
   nodeData: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    brokerId: PropTypes.number.isRequired,
     isLeader: PropTypes.bool.isRequired,
     last_heartbeat: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
-  killNode: PropTypes.func.isRequired,
+  stopBroker: PropTypes.func.isRequired,
 };
 
 export default BrokerCard;

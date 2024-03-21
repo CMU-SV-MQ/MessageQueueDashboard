@@ -92,53 +92,77 @@ function Dashboard() {
     }
   };
 
-  const getBrokerLeader = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/broker/leader");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const leaderData = await response.json();
-      return leaderData;
-    } catch (error) {
-      console.error("Failed to get broker leader:", error);
-    }
-  };
-
-  const checkBrokersAlive = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/broker/checkAlive");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const aliveData = await response.json();
-      return aliveData;
-    } catch (error) {
-      console.error("Failed to check if brokers are alive:", error);
-    }
-  };
-
-  const refreshData = async () => {
-    try {
-      const [leaderData, aliveData] = await Promise.all([
-        getBrokerLeader(),
-        checkBrokersAlive(),
-      ]);
-
-      setLeader(leaderData);
-      setAliveStatus(aliveData);
-
-      // TODO: assuming aliveData is an array with the status of each node. modify based on actual APIs
-      const updatedNodes = aliveData.map((node) => {
-        return {
-          ...node,
-          isLeader: node.id === leaderData.id,
-        };
+  const getBrokerLeader = () => {
+    console.log("getBrokerLeader called");
+    return fetch("http://localhost:8080/broker/leader")
+      .then((response) => {
+        console.log("getBrokerLeader Response received:", response);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((leaderData) => {
+        console.log("INSIDE getBrokerLeader", leaderData);
+        return leaderData;
+      })
+      .catch((error) => {
+        console.error("Failed to get broker leader:", error);
       });
-      setBrokers(updatedNodes);
-    } catch (error) {
-      console.error("Error during refresh:", error);
-    }
+  };
+
+  // const checkBrokersAlive = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8080/broker/checkAlive");
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     const aliveData = await response.json();
+  //     return aliveData;
+  //   } catch (error) {
+  //     console.error("Failed to check if brokers are alive:", error);
+  //   }
+  // };
+
+  const checkBrokersAlive = () => {
+    console.log("checkBrokersAlive called");
+    return fetch("http://localhost:8080/broker/checkAlive")
+      .then((response) => {
+        console.log("checkBrokersAlive Response received:", response);
+        if (!response.ok) {
+          throw new Error("Network response error");
+        }
+        return response.json();
+      })
+      .then((aliveData) => {
+        console.log("Parsed data:", aliveData);
+        return aliveData;
+      })
+      .catch((error) => {
+        console.error("Failed to check if brokers are alive:", error);
+      });
+  };
+
+  const refreshData = () => {
+    Promise.all([getBrokerLeader(), checkBrokersAlive()])
+      .then(([leaderData, aliveData]) => {
+        console.log("Leader:", leaderData);
+        console.log("AliveData:", aliveData);
+
+        setLeader(leaderData);
+        setAliveStatus(aliveData);
+
+        const updatedNodes = aliveData.checkAliveList.map((node) => {
+          return {
+            ...node,
+            isLeader: node.brokerId.toString() === leaderData.leaderId,
+          };
+        });
+        setBrokers(updatedNodes);
+      })
+      .catch((error) => {
+        console.error("Error during refresh:", error);
+      });
   };
 
   const resetBrokerStrategy = async (selectedStrategy) => {
@@ -196,9 +220,9 @@ function Dashboard() {
         <Flex w="100%" flexWrap="wrap" justifyContent="start">
           {brokers.map((node) => (
             <BrokerCard
-              key={node.id}
+              key={node.brokerId}
               nodeData={node}
-              stopBroker={() => stopBroker(node.id)}
+              stopBroker={() => stopBroker(node.brokerId)}
             />
           ))}
         </Flex>
