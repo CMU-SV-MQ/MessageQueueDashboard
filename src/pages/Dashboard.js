@@ -18,31 +18,18 @@ function Dashboard() {
   // const [socketState, setSocketState] = useState(-1);
   // const socket = useSocket('');
 
-  // const dummyNodes = [
-  //   {
-  //     id: 1,
-  //     isLeader: true,
-  //     status: "Active",
-  //     type: "Type A",
-  //     last_heartbeat: Date.now(),
-  //   },
-  //   {
-  //     id: 2,
-  //     isLeader: false,
-  //     status: "Active",
-  //     type: "Type B",
-  //     last_heartbeat: Date.now(),
-  //   },
-  //   {
-  //     id: 3,
-  //     isLeader: false,
-  //     status: "Inactive",
-  //     type: "Type C",
-  //     last_heartbeat: Date.now(),
-  //   },
-  // ];
+  const getNextServerIndex = () => {
+    if (brokers.length === 0) {
+      return 1; // Start with 1 if there are no brokers
+    } else {
+      // Find the highest brokerId in the current array
+      const maxId = Math.max(...brokers.map((broker) => broker.brokerId));
+      return maxId + 1; // Increment the highest id to get the next index
+    }
+  };
 
-  const addBroker = async (serverIndex) => {
+  const addBroker = async () => {
+    const serverIndex = getNextServerIndex();
     const requestBody = {
       serverIndex,
     };
@@ -62,15 +49,21 @@ function Dashboard() {
 
       const result = await response.json();
       console.log(result);
+      // console.log("Server index:", serverIndex);
+      // console.log("Brokers:", brokers);
+      if (result.success) {
+        const newBroker = {
+          brokerId: serverIndex,
+        };
+        setBrokers((prevBrokers) => [...prevBrokers, newBroker]);
+      }
     } catch (error) {
       console.error("Failed to add broker:", error);
     }
   };
 
-  const stopBroker = async (serverIndex) => {
-    const requestBody = {
-      serverIndex,
-    };
+  const stopBroker = async (brokerId) => {
+    const requestBody = { serverIndex: brokerId };
 
     try {
       const response = await fetch("http://localhost:8080/broker/stopBroker", {
@@ -80,13 +73,17 @@ function Dashboard() {
         },
         body: JSON.stringify(requestBody),
       });
-
+      const result = await response.json();
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(result.message || "Network response was not ok");
       }
 
-      const result = await response.json();
-      console.log(result);
+      console.log(result.message);
+      setBrokers((prevBrokers) =>
+        // eslint-disable-next-line prettier/prettier
+        prevBrokers.filter((broker) => broker.brokerId !== brokerId)
+      );
+      // await refreshData();
     } catch (error) {
       console.error("Failed to stop broker:", error);
     }
@@ -110,19 +107,6 @@ function Dashboard() {
         console.error("Failed to get broker leader:", error);
       });
   };
-
-  // const checkBrokersAlive = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:8080/broker/checkAlive");
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const aliveData = await response.json();
-  //     return aliveData;
-  //   } catch (error) {
-  //     console.error("Failed to check if brokers are alive:", error);
-  //   }
-  // };
 
   const checkBrokersAlive = () => {
     console.log("checkBrokersAlive called");
