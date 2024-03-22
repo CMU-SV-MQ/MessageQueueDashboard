@@ -2,24 +2,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import Header from "../components/Header";
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   Handle,
   MiniMap,
 } from "reactflow";
+import axios from "axios";
 import "reactflow/dist/style.css";
-import { topics, consumerGroups, relationships } from "../data";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import GroupNode from "../components/GroupNode";
 
 const columnXPosition = {
-  topics: 100, // x position for topics column
-  consumerGroups: 500, // x position for consumer groups column
+  topics: 100,
+  consumerGroups: 500,
 };
-const groupSpacing = 20; // vertical spacing between groups
+const groupSpacing = 20;
 
 const MotionBox = motion(Box);
 
@@ -140,7 +140,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
 
   // Create edges for relationships
   relationships.forEach((relation) => {
-    const edgeColor = relation.type === "stash" ? "red" : "blue";
+    const edgeColor = relation.type === "stash" ? "red" : "green";
     const sourceId = `${relation.topic}_${relation.partition}`;
     const targetId = `${relation.consumerGroup}_${relation.consumer}`;
 
@@ -162,37 +162,92 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
 };
 
 export default function App() {
+  const [data, setData] = useState({
+    topics: [],
+    consumerGroups: [],
+    relationships: [],
+  });
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // Debugging: Log the data to ensure it's being loaded correctly
-  console.log("Topics:", topics);
-  console.log("Consumer Groups:", consumerGroups);
-  console.log("Relationships:", relationships);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/broker");
+        if (response.data.success) {
+          const transformedData = transformApiResponseToData(
+            response.data.broker
+          );
+          setData(transformedData);
+        } else {
+          console.error("API error:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Fetching error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const transformApiResponseToData = (brokerData) => {
+    // Initialize structures to hold our topics, consumer groups, and relationships
+    const topics = [];
+    const consumerGroups = [];
+    const relationships = [];
+    const topicPartitionsSet = new Set();
+
+    // Process topic partitions
+    brokerData.topicPartitions.forEach((topicPartition) => {
+      const topicObj = { id: topicPartition.topic, partitions: [] };
+
+      topicPartition.partitions.forEach((partition) => {
+        const partitionKey = `P${partition.partitionId}`;
+        topicObj.partitions.push(partitionKey);
+        // Keep track of unique topic-partition combinations
+        topicPartitionsSet.add(`${topicPartition.topic}_${partitionKey}`);
+      });
+
+      topics.push(topicObj);
+    });
+
+    // Process consumer groups
+    brokerData.consumerGroups.forEach((group) => {
+      const groupObj = { id: group.consumerGroupId, consumers: [] };
+
+      group.consumers.forEach((consumer) => {
+        groupObj.consumers.push(consumer.memberId);
+
+        consumer.topicPartitions.forEach((tp) => {
+          tp.partitions.forEach((partition) => {
+            const partitionKey = `P${partition.partitionId}`;
+            if (topicPartitionsSet.has(`${tp.topic}_${partitionKey}`)) {
+              relationships.push({
+                consumerGroup: group.consumerGroupId,
+                consumer: consumer.memberId,
+                topic: tp.topic,
+                partition: partitionKey,
+                type: "commit",
+              });
+            }
+          });
+        });
+      });
+
+      consumerGroups.push(groupObj);
+    });
+
+    return { topics, consumerGroups, relationships };
+  };
 
   const { nodes: initialNodes, edges: initialEdges } = useMemo(() => {
-    try {
-      if (
-        Array.isArray(topics) &&
-        Array.isArray(consumerGroups) &&
-        Array.isArray(relationships)
-      ) {
-        const elements = transformDataToElements(
-          topics,
-          consumerGroups,
-          relationships
-        );
-        // Debugging: Log the transformed elements
-        // console.log("Transformed Elements:", elements);
-        return elements;
-      }
-      return { nodes: [], edges: [] };
-    } catch (error) {
-      // Log any errors that occur during transformation
-      // console.error("Error transforming data:", error);
-      return { nodes: [], edges: [] };
-    }
-  }, [topics, consumerGroups, relationships]);
+    const elements = transformDataToElements(
+      data.topics,
+      data.consumerGroups,
+      data.relationships
+    );
+    return elements;
+  }, [data]);
 
   useEffect(() => {
     setNodes(initialNodes);

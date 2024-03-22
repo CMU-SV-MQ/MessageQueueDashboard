@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+// import axios from "axios";
 import { HiOutlineServer, HiRefresh } from "react-icons/hi";
 import PageTitle from "../components/PageTitle";
 import { VStack, Flex, Button, HStack, Spacer } from "@chakra-ui/react";
 import AddBrokerBtn from "../components/AddBrokerBtn.js";
-// import LoadingSpinner from "../components/LoadingSpinner";
 import BrokerCard from "../components/BrokerCard.js";
 // import useSocket from "../hooks/useSocket.js";
 // import { getSocketStateColor, getSocketStateString } from "../utils/socket";
@@ -20,11 +20,10 @@ function Dashboard() {
 
   const getNextServerIndex = () => {
     if (brokers.length === 0) {
-      return 1; // Start with 1 if there are no brokers
+      return 1;
     } else {
-      // Find the highest brokerId in the current array
       const maxId = Math.max(...brokers.map((broker) => broker.brokerId));
-      return maxId + 1; // Increment the highest id to get the next index
+      return maxId + 1;
     }
   };
 
