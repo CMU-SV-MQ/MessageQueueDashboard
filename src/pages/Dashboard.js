@@ -174,11 +174,7 @@ function Dashboard() {
       <Header />
       <Flex w="100%" px="2rem" flexDirection="column">
         <Flex w="100%" justifyContent="space-between" alignItems="center">
-          <PageTitle
-            title="Broker Status"
-            colorScheme="yellow"
-            icon={HiOutlineServer}
-          />
+          <PageTitle title="Broker Status" icon={HiOutlineServer} />
           <Spacer />
           <HStack spacing="1rem">
             <Button

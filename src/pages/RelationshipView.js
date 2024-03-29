@@ -61,9 +61,28 @@ const CustomNode = ({ data }) => {
   );
 };
 
+// const CustomGroupNode = ({ data }) => {
+//   return (
+//     <Box
+//       p={2}
+//       bg="gray.50"
+//       border="2px"
+//       borderColor="gray.300"
+//       borderRadius="md"
+//       boxShadow="lg"
+//       style={{ width: "100%", position: "relative" }} // Make sure to cover the full width of the parent container
+//     >
+//       <Text fontSize="md" fontWeight="bold" textAlign="center">
+//         {data.label}
+//       </Text>
+//       {/* Now, child nodes will be positioned within this box by React Flow */}
+//     </Box>
+//   );
+// };
+
 const nodeTypes = {
   custom: CustomNode,
-  // group: GroupNode,
+  // group: CustomGroupNode,
 };
 
 const transformDataToElements = (topics, consumerGroups, relationships) => {
@@ -80,6 +99,8 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
       type: "group",
       position: { x: columnXPosition.topics, y: currentTopicY },
       data: { label: topic.id },
+      label: topic.id,
+      labelStyle: { transform: "translate(0, -100%)", fontWeight: "bold" },
       draggable: false,
       style: {
         height: topicGroupHeight,

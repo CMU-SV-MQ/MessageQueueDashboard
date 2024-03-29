@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
+import PageTitle from "../components/PageTitle";
+import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import PartitionDetailsModal from "../components/PartitionDetailPopup";
 import {
   Box,
@@ -18,6 +20,9 @@ import {
   Stack,
   Container,
   VStack,
+  Flex,
+  HStack,
+  Spacer,
 } from "@chakra-ui/react";
 
 // const DUMMY_TOPICS = [
@@ -70,25 +75,29 @@ function BrokerDetail() {
   };
 
   return (
-    <Box bg="gray.100">
+    <VStack spacing={4}>
       <Header />
-      <Container maxW="container.xl" pt={5}>
-        <VStack spacing={4} align="stretch">
-          <Heading as="h2" size="lg" color="gray.600" noOfLines={1}>
-            Topic Monitoring
-          </Heading>
-          <Accordion allowMultiple>
+      <Flex w="100%" px="2rem" flexDirection="column">
+        <Flex w="100%" justifyContent="space-between" alignItems="center">
+          <PageTitle title="Topic Monitoring" icon={HiOutlineDatabase} />
+          <Spacer />
+          <HStack spacing="1rem">
+            {/* Insert any buttons or actions specific to this page here, if necessary */}
+          </HStack>
+        </Flex>
+        <Flex w="100%" flexWrap="wrap" justifyContent="start" px="2rem">
+          <Accordion allowMultiple w="full">
             {topics.map((topic, idx) => (
               <AccordionItem key={idx}>
                 <h2>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left">
+                  <AccordionButton py="4">
+                    <Box flex="2" textAlign="left" fontSize={20}>
                       {topic.id}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                <AccordionPanel pb={4}>
+                <AccordionPanel pb={6}>
                   <Stack direction="row" spacing={4}>
                     {topic.partitions.map((partition, pIdx) => (
                       <Button
@@ -102,8 +111,11 @@ function BrokerDetail() {
                           px={4}
                           py={2}
                           borderRadius="lg"
-                          variant="solid"
-                          colorScheme="gray"
+                          bg="purple.50"
+                          color="purple.800"
+                          border="2px"
+                          borderColor="purple.500"
+                          fontSize="md"
                         >
                           {partition.partitionId}
                         </Badge>
@@ -114,14 +126,67 @@ function BrokerDetail() {
               </AccordionItem>
             ))}
           </Accordion>
-        </VStack>
-      </Container>
+        </Flex>
+      </Flex>
       <PartitionDetailsModal
         isOpen={isOpen}
         onClose={onClose}
         partitionDetails={selectedPartitionDetails}
       />
-    </Box>
+    </VStack>
+
+    // <Box bg="gray.0">
+    //   <Header />
+    //   <Container maxW="container.xl" pt={5}>
+    //     <VStack spacing={4} align="stretch">
+    //       <Heading as="h2" size="lg" color="gray.600" noOfLines={1}>
+    //         Topic Monitoring
+    //       </Heading>
+    //       <Accordion allowMultiple>
+    //         {topics.map((topic, idx) => (
+    //           <AccordionItem key={idx}>
+    //             <h2>
+    //               <AccordionButton>
+    //                 <Box flex="1" textAlign="left">
+    //                   {topic.id}
+    //                 </Box>
+    //                 <AccordionIcon />
+    //               </AccordionButton>
+    //             </h2>
+    //             <AccordionPanel pb={4}>
+    //               <Stack direction="row" spacing={4}>
+    //                 {topic.partitions.map((partition, pIdx) => (
+    //                   <Button
+    //                     key={pIdx}
+    //                     variant="ghost"
+    //                     onClick={() =>
+    //                       handleBadgeClick(topic.id, partition.partitionId)
+    //                     }
+    //                   >
+    //                     <Badge
+    //                       px={4}
+    //                       py={2}
+    //                       borderRadius="lg"
+    //                       variant="solid"
+    //                       colorScheme="gray"
+    //                     >
+    //                       {partition.partitionId}
+    //                     </Badge>
+    //                   </Button>
+    //                 ))}
+    //               </Stack>
+    //             </AccordionPanel>
+    //           </AccordionItem>
+    //         ))}
+    //       </Accordion>
+    //     </VStack>
+    //   </Container>
+    //   <PartitionDetailsModal
+    //     isOpen={isOpen}
+    //     onClose={onClose}
+    //     partitionDetails={selectedPartitionDetails}
+    //   />
+    // </Box>
   );
 }
 
