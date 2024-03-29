@@ -19,17 +19,17 @@ const DUMMY_PARTITION_DETAILS = {
     "Message 2: This is another message from p0",
     "Message 3: Yet another message from p0",
   ],
-  commitIndex: [
-    "commitIndex 1: This is a commitIndex from p0",
-    "commitIndex 2: This is another commitIndex from p0",
-  ],
-  stashIndex: [
-    "stashIndex 1: This is a stashIndex from p0",
-    "stashIndex 2: This is another stashIndex from p0",
-  ],
+  commitIndex: ["commitIndex1", "commitIndex2"],
+  stashIndex: ["stashIndex1", "stashIndex2"],
 };
 
-const PartitionDetailsModal = ({ isOpen, onClose }) => {
+const PartitionDetailsModal = ({ isOpen, onClose, partitionDetails }) => {
+  const details = partitionDetails || {
+    messages: [],
+    commitIndex: [],
+    stashIndex: [],
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <ModalOverlay />
@@ -38,6 +38,17 @@ const PartitionDetailsModal = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing={4} align="stretch">
+            <Text fontSize="lg" fontWeight="bold">
+              Messages
+            </Text>
+            {details.messages.map((message, idx) => (
+              <Text key={idx}>{atob(message.value)}</Text> // Decoding Base64 message content
+            ))}
+            {/* {details.messages.map((message, idx) => (
+              <Text key={idx}>{atob(message.value)}</Text> // Decoding Base64 message content
+            ))} */}
+          </VStack>
+          {/* <VStack spacing={4} align="stretch">
             <Text fontSize="lg" fontWeight="bold">
               Messages
             </Text>
@@ -56,7 +67,7 @@ const PartitionDetailsModal = ({ isOpen, onClose }) => {
             {DUMMY_PARTITION_DETAILS.stashIndex.map((message, idx) => (
               <Text key={idx}>{message}</Text>
             ))}
-          </VStack>
+          </VStack> */}
         </ModalBody>
         <ModalFooter />
       </ModalContent>

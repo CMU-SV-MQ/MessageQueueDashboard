@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import PartitionDetailsModal from "../components/PartitionDetailPopup";
 import {
@@ -19,19 +21,53 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const DUMMY_TOPICS = [
-  { id: "Topic 1 Name Here", partitions: ["P0", "P1", "P2", "P3"] },
-  { id: "Topic 2 Name Here", partitions: ["P0", "P1", "P2", "P3", "P4", "P5"] },
-  { id: "Topic 3 Name Here", partitions: ["P0", "P1", "P2"] },
-];
+// const DUMMY_TOPICS = [
+//   { id: "Topic 1 Name Here", partitions: ["P0", "P1", "P2", "P3"] },
+//   { id: "Topic 2 Name Here", partitions: ["P0", "P1", "P2", "P3", "P4", "P5"] },
+//   { id: "Topic 3 Name Here", partitions: ["P0", "P1", "P2"] },
+// ];
 
 function BrokerDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedPartition, setSelectedPartition] = useState(null);
+  const [selectedPartitionDetails, setSelectedPartitionDetails] =
+    useState(null);
+  const [topics, setTopics] = useState([]);
 
-  const handleBadgeClick = (partition) => {
-    setSelectedPartition(partition);
-    onOpen();
+  const fetchBrokerData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/broker");
+      const brokerData = response.data;
+      const formattedTopics = brokerData.broker.topicPartitions.map(
+        (topic) => ({
+          id: topic.topic,
+          partitions: topic.partitions.map((partition) => ({
+            partitionId: `P${partition.partitionId}`,
+            messages: partition.messages,
+          })),
+        })
+      );
+      setTopics(formattedTopics);
+      // console.log(formattedTopics);
+    } catch (error) {
+      console.error("Failed to fetch broker data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBrokerData();
+  }, []);
+
+  const handleBadgeClick = (topicId, partitionId) => {
+    const topic = topics.find((t) => t.id === topicId);
+    if (topic) {
+      const partition = topic.partitions.find(
+        (p) => p.partitionId === partitionId
+      );
+      if (partition) {
+        setSelectedPartitionDetails(partition);
+        onOpen();
+      }
+    }
   };
 
   return (
@@ -39,14 +75,11 @@ function BrokerDetail() {
       <Header />
       <Container maxW="container.xl" pt={5}>
         <VStack spacing={4} align="stretch">
-          {/* <Text fontSize="3xl" mb={4}>
-            Topic Monitoring
-          </Text> */}
           <Heading as="h2" size="lg" color="gray.600" noOfLines={1}>
             Topic Monitoring
           </Heading>
           <Accordion allowMultiple>
-            {DUMMY_TOPICS.map((topic, idx) => (
+            {topics.map((topic, idx) => (
               <AccordionItem key={idx}>
                 <h2>
                   <AccordionButton>
@@ -62,7 +95,9 @@ function BrokerDetail() {
                       <Button
                         key={pIdx}
                         variant="ghost"
-                        onClick={() => handleBadgeClick(partition)}
+                        onClick={() =>
+                          handleBadgeClick(topic.id, partition.partitionId)
+                        }
                       >
                         <Badge
                           px={4}
@@ -71,7 +106,7 @@ function BrokerDetail() {
                           variant="solid"
                           colorScheme="gray"
                         >
-                          {partition}
+                          {partition.partitionId}
                         </Badge>
                       </Button>
                     ))}
@@ -85,7 +120,7 @@ function BrokerDetail() {
       <PartitionDetailsModal
         isOpen={isOpen}
         onClose={onClose}
-        partition={selectedPartition}
+        partitionDetails={selectedPartitionDetails}
       />
     </Box>
   );
