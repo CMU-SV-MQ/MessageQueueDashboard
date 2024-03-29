@@ -4,17 +4,17 @@
 
 import { Box } from "@chakra-ui/react";
 
-const GroupNode = ({ id, data, isConnectable }) => {
+const GroupNode = ({ data }) => {
   return (
     <Box
       p={2}
       border="2px solid #ddd"
       borderRadius="md"
       boxShadow="base"
-      backgroundColor={data.bgColor || "#f0f0f0"}
+      // backgroundColor={data.bgColor || "#f0f0f0"}
       position="relative"
-      width="fit-content"
-      height="fit-content"
+      // width="fit-content"
+      // height="fit-content"
     >
       <div
         style={{
@@ -27,18 +27,6 @@ const GroupNode = ({ id, data, isConnectable }) => {
       >
         {data.label}
       </div>
-      {/* <Handle
-        type="target"
-        position={Position.Left}
-        style={{ borderRadius: 0 }}
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Right}
-        style={{ borderRadius: 0 }}
-        isConnectable={isConnectable}
-      /> */}
     </Box>
   );
 };

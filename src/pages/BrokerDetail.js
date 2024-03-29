@@ -16,7 +16,6 @@ import {
   useDisclosure,
   Heading,
   Stack,
-  Text,
   Container,
   VStack,
 } from "@chakra-ui/react";
@@ -71,7 +70,7 @@ function BrokerDetail() {
   };
 
   return (
-    <Box>
+    <Box bg="gray.100">
       <Header />
       <Container maxW="container.xl" pt={5}>
         <VStack spacing={4} align="stretch">

@@ -6,9 +6,9 @@ import { HiOutlineX } from "react-icons/hi";
 
 function BrokerCard({ nodeData, stopBroker }) {
   const [isAdding, setIsAdding] = useState(false);
-  const bgColor = nodeData.isLeader ? "gray.500" : "gray.100";
-  const contentColor = nodeData.isLeader ? "gray.50" : "gray.600";
-  const borderColor = nodeData.isLeader ? "gray.700" : "gray.300";
+  const bgColor = nodeData.isLeader ? "purple.300" : "gray.100";
+  const contentColor = nodeData.isLeader ? "purple.50" : "gray.600";
+  const borderColor = nodeData.isLeader ? "purple.700" : "gray.300";
 
   return (
     <Flex
@@ -49,7 +49,7 @@ function BrokerCard({ nodeData, stopBroker }) {
         <NodeLabel status={nodeData.status} />
       </Flex>
       <Button
-        colorScheme="red"
+        bg="orange.400"
         ml="auto"
         leftIcon={<HiOutlineX />}
         isLoading={isAdding}

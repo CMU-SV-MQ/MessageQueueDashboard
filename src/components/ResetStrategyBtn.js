@@ -25,7 +25,7 @@ function ResetStrategyBtn({ update }) {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button colorScheme="gray" size="md" leftIcon={<HiOutlineCog />}>
+        <Button bg="purple.50" size="md" leftIcon={<HiOutlineCog />}>
           Reset Strategy
         </Button>
       </PopoverTrigger>
@@ -36,21 +36,21 @@ function ResetStrategyBtn({ update }) {
         <PopoverBody>
           <RadioGroup onChange={setStrategy} value={strategy}>
             <Stack direction="column">
-              <Radio colorScheme="yellow" value="round-robin">
+              <Radio colorScheme="purple" value="round-robin">
                 Round Robin
               </Radio>
-              <Radio colorScheme="yellow" value="range">
+              <Radio colorScheme="purple" value="range">
                 Range
               </Radio>
-              <Radio colorScheme="yellow" value="fail-over">
+              <Radio colorScheme="purple" value="fail-over">
                 Fail Over
               </Radio>
-              <Radio colorScheme="yellow" value="sticky">
+              <Radio colorScheme="purple" value="sticky">
                 Sticky
               </Radio>
             </Stack>
           </RadioGroup>
-          <Button mt="4" colorScheme="yellow" onClick={handleUpdate}>
+          <Button mt="4" colorScheme="purple" onClick={handleUpdate}>
             Reset
           </Button>
         </PopoverBody>

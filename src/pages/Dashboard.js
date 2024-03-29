@@ -5,8 +5,6 @@ import PageTitle from "../components/PageTitle";
 import { VStack, Flex, Button, HStack, Spacer } from "@chakra-ui/react";
 import AddBrokerBtn from "../components/AddBrokerBtn.js";
 import BrokerCard from "../components/BrokerCard.js";
-// import useSocket from "../hooks/useSocket.js";
-// import { getSocketStateColor, getSocketStateString } from "../utils/socket";
 import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
 import Header from "../components/Header";
 
@@ -14,9 +12,6 @@ function Dashboard() {
   const [, setLeader] = useState(null);
   const [, setAliveStatus] = useState([]);
   const [brokers, setBrokers] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [socketState, setSocketState] = useState(-1);
-  // const socket = useSocket('');
 
   const getNextServerIndex = () => {
     if (brokers.length === 0) {
@@ -187,7 +182,7 @@ function Dashboard() {
           <Spacer />
           <HStack spacing="1rem">
             <Button
-              colorScheme="yellow"
+              colorScheme="purple"
               variant="ghost"
               size="md"
               leftIcon={<HiRefresh />}

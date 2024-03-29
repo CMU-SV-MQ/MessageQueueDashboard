@@ -13,7 +13,7 @@ import axios from "axios";
 import "reactflow/dist/style.css";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 // import { motion } from "framer-motion";
-import GroupNode from "../components/GroupNode";
+// import GroupNode from "../components/GroupNode";
 
 const columnXPosition = {
   topics: 100,
@@ -25,15 +25,16 @@ const groupSpacing = 20;
 
 const CustomNode = ({ data }) => {
   const isPartition = data.label.startsWith("P");
-  const bgColor = isPartition ? "gray.300" : "blue.300";
+  const bgColor = isPartition ? "gray.300" : "gray.300";
+  const borderColor = isPartition ? "gray.300" : "gray.300";
   return (
     <Box
       bg={bgColor}
       p={2}
       border="2px"
-      borderColor="gray.400"
+      borderColor={borderColor}
       borderRadius="md"
-      boxShadow="base"
+      boxShadow="md"
       layout
       initial={{ opacity: 0.5 }}
       animate={{ opacity: 1 }}
@@ -62,7 +63,7 @@ const CustomNode = ({ data }) => {
 
 const nodeTypes = {
   custom: CustomNode,
-  group: GroupNode,
+  // group: GroupNode,
 };
 
 const transformDataToElements = (topics, consumerGroups, relationships) => {
@@ -140,7 +141,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
 
   // Create edges for relationships
   relationships.forEach((relation) => {
-    const edgeColor = relation.type === "stash" ? "red" : "green";
+    const edgeColor = relation.type === "stash" ? "orange" : "green";
     const sourceId = `${relation.topic}_${relation.partition}`;
     const targetId = `${relation.consumerGroup}_${relation.consumer}`;
 
