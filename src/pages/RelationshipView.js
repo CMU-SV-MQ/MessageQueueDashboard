@@ -12,7 +12,7 @@ import ReactFlow, {
 import axios from "axios";
 import "reactflow/dist/style.css";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import GroupNode from "../components/GroupNode";
 
 const columnXPosition = {
@@ -21,13 +21,13 @@ const columnXPosition = {
 };
 const groupSpacing = 20;
 
-const MotionBox = motion(Box);
+// const MotionBox = motion(Box);
 
 const CustomNode = ({ data }) => {
   const isPartition = data.label.startsWith("P");
   const bgColor = isPartition ? "gray.300" : "blue.300";
   return (
-    <MotionBox
+    <Box
       bg={bgColor}
       p={2}
       border="2px"
@@ -56,7 +56,7 @@ const CustomNode = ({ data }) => {
         id={`${data.id}_right`}
         style={{ top: "50%", borderRadius: 0, background: "#555" }}
       />
-    </MotionBox>
+    </Box>
   );
 };
 
@@ -154,7 +154,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
       style: { stroke: edgeColor },
     };
 
-    // console.log("Creating edge:", edge);
+    console.log("Creating edge:", edge);
     edges.push(edge);
   });
 
