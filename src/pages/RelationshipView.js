@@ -13,7 +13,7 @@ import axios from "axios";
 import "reactflow/dist/style.css";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 // import { motion } from "framer-motion";
-// import GroupNode from "../components/GroupNode";
+import GroupNode from "../components/GroupNode";
 
 const columnXPosition = {
   topics: 100,
@@ -25,10 +25,11 @@ const groupSpacing = 20;
 
 const CustomNode = ({ data }) => {
   const isPartition = data.label.startsWith("P");
-  const bgColor = isPartition ? "gray.300" : "gray.300";
-  const borderColor = isPartition ? "gray.300" : "gray.300";
+  const bgColor = isPartition ? "gray.300" : "gray.400";
+  const borderColor = isPartition ? "gray.300" : "gray.400";
   return (
     <Box
+      width="100%"
       bg={bgColor}
       p={2}
       border="2px"
@@ -82,7 +83,7 @@ const CustomNode = ({ data }) => {
 
 const nodeTypes = {
   custom: CustomNode,
-  // group: CustomGroupNode,
+  group: GroupNode,
 };
 
 const transformDataToElements = (topics, consumerGroups, relationships) => {
@@ -99,15 +100,16 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
       type: "group",
       position: { x: columnXPosition.topics, y: currentTopicY },
       data: { label: topic.id },
-      label: topic.id,
-      labelStyle: { transform: "translate(0, -100%)", fontWeight: "bold" },
+      // label: topic.id,
+      // labelStyle: { transform: "translate(0, -100%)", fontWeight: "bold" },
       draggable: false,
       style: {
+        // width: "60px",
         height: topicGroupHeight,
         backgroundColor: "gray.50",
-        borderColor: "gray",
+        borderColor: "gray.100",
         borderRadius: "md",
-        boxShadow: "lg",
+        // boxShadow: "lg",
         padding: "2",
       },
     });

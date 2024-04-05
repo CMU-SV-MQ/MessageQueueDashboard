@@ -2,19 +2,23 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 
+// GroupNode component
 import { Box } from "@chakra-ui/react";
 
-const GroupNode = ({ data }) => {
+const GroupNode = ({ data, style }) => {
   return (
     <Box
       p={2}
-      border="2px solid #ddd"
+      border="transparent"
+      bgColor="transparent"
       borderRadius="md"
       boxShadow="base"
-      // backgroundColor={data.bgColor || "#f0f0f0"}
       position="relative"
-      // width="fit-content"
-      // height="fit-content"
+      width="fit-content"
+      // width={style?.width || "100%"} // Apply width from the style prop or default to 100%
+      // height={style?.height || "100%"} // Apply height from the style prop or default to 100%
+      backgroundColor={data.bgColor || "#f0f0f0"}
+      {...style} // Spread any additional style props
     >
       <div
         style={{

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
 // import axios from "axios";
 import { HiOutlineServer, HiRefresh } from "react-icons/hi";
@@ -51,6 +52,7 @@ function Dashboard() {
         };
         setBrokers((prevBrokers) => [...prevBrokers, newBroker]);
       }
+      await refreshData();
     } catch (error) {
       console.error("Failed to add broker:", error);
     }
@@ -77,7 +79,7 @@ function Dashboard() {
         // eslint-disable-next-line prettier/prettier
         prevBrokers.filter((broker) => broker.brokerId !== brokerId)
       );
-      // await refreshData();
+      await refreshData();
     } catch (error) {
       console.error("Failed to stop broker:", error);
     }
@@ -130,7 +132,11 @@ function Dashboard() {
         setLeader(leaderData);
         setAliveStatus(aliveData);
 
-        const updatedNodes = aliveData.checkAliveList.map((node) => {
+        const activeBrokers = aliveData.checkAliveList.filter(
+          (broker) => broker.isAlive
+        );
+
+        const updatedNodes = activeBrokers.map((node) => {
           return {
             ...node,
             isLeader: node.brokerId.toString() === leaderData.leaderId,
