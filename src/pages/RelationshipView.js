@@ -25,38 +25,36 @@ const groupSpacing = 20;
 
 const CustomNode = ({ data }) => {
   const isPartition = data.label.startsWith("P");
-  const bgColor = isPartition ? "gray.300" : "gray.400";
-  const borderColor = isPartition ? "gray.300" : "gray.400";
+  const bgColor = isPartition ? "purple.700" : "purple.100";
+  const borderColor = isPartition ? "purple.700" : "purple.100";
+  const textColor = isPartition ? "white" : "gray.800";
   return (
     <Box
-      width="100%"
+      width="40px"
+      height="40px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       bg={bgColor}
-      p={2}
-      border="2px"
-      borderColor={borderColor}
-      borderRadius="md"
+      borderRadius="full"
+      border={borderColor}
       boxShadow="md"
-      layout
-      initial={{ opacity: 0.5 }}
-      animate={{ opacity: 1 }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
       style={{ position: "relative" }}
     >
-      <Text fontSize="sm" textAlign="center">
+      <Text fontSize="sm" color={textColor} textAlign="center">
         {data.label}
       </Text>
       <Handle
         type="target"
         position="left"
         id={`${data.id}_left`}
-        style={{ top: "50%", borderRadius: 0, background: "#555" }} // Handles can also be styled to match
+        style={{ visibility: "hidden" }}
       />
       <Handle
         type="source"
         position="right"
         id={`${data.id}_right`}
-        style={{ top: "50%", borderRadius: 0, background: "#555" }}
+        style={{ visibility: "hidden" }}
       />
     </Box>
   );
@@ -164,7 +162,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
 
   // Create edges for relationships
   relationships.forEach((relation) => {
-    const edgeColor = relation.type === "stash" ? "orange" : "green";
+    const edgeColor = "purple.500";
     const sourceId = `${relation.topic}_${relation.partition}`;
     const targetId = `${relation.consumerGroup}_${relation.consumer}`;
 
@@ -174,7 +172,7 @@ const transformDataToElements = (topics, consumerGroups, relationships) => {
       target: targetId,
       sourceHandle: `${sourceId}_right`,
       targetHandle: `${targetId}_left`,
-      label: relation.type,
+
       style: { stroke: edgeColor },
     };
 
