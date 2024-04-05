@@ -19,15 +19,10 @@ import {
   Stack,
   VStack,
   Flex,
+  Text,
   HStack,
   Spacer,
 } from "@chakra-ui/react";
-
-// const DUMMY_TOPICS = [
-//   { id: "Topic 1 Name Here", partitions: ["P0", "P1", "P2", "P3"] },
-//   { id: "Topic 2 Name Here", partitions: ["P0", "P1", "P2", "P3", "P4", "P5"] },
-//   { id: "Topic 3 Name Here", partitions: ["P0", "P1", "P2"] },
-// ];
 
 function BrokerDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -82,6 +77,8 @@ function BrokerDetail() {
     }
   };
 
+  const allAccordionIndexes = topics.map((_, index) => index);
+
   return (
     <Flex>
       <Header />
@@ -91,55 +88,63 @@ function BrokerDetail() {
         w={`calc(100% - ${sidebarWidth})`}
         p="4"
       >
-        <Flex w="100%" px="2rem" flexDirection="column">
-          <Flex w="100%" justifyContent="space-between" alignItems="center">
-            <PageTitle title="Topic Monitoring" icon={HiOutlineDatabase} />
-            <Spacer />
-            <HStack spacing="1rem"></HStack>
-          </Flex>
-          <Flex w="100%" flexWrap="wrap" justifyContent="start" px="2rem">
-            <Accordion allowMultiple w="full">
-              {topics.map((topic, idx) => (
-                <AccordionItem key={idx}>
-                  <h2>
-                    <AccordionButton py="4">
-                      <Box flex="2" textAlign="left" fontSize={20}>
-                        {topic.id}
+        <Flex direction="column">
+          <PageTitle title="Topic Monitoring" icon={HiOutlineDatabase} />
+          <Flex wrap="wrap" justify="space-around">
+            {topics.map((topic, idx) => (
+              <Box
+                key={idx}
+                borderRadius="lg"
+                p={0}
+                m={2}
+                boxShadow="md"
+                width="calc(50% - 1rem)"
+              >
+                <Box
+                  bgGradient="linear(to-r, purple.600, purple.300)"
+                  borderRadius="lg"
+                  p={3}
+                  borderBottomRadius={0}
+                >
+                  <Text fontSize="lg" color="white">
+                    {topic.id}
+                  </Text>
+                </Box>
+                <Box
+                  bg="gray.50"
+                  p={3}
+                  borderTopRadius={0}
+                  borderBottomRadius="lg"
+                >
+                  <Flex direction="row" wrap="wrap" justify="start">
+                    {topic.partitions.map((partition, pIdx) => (
+                      <Box
+                        key={pIdx}
+                        borderRadius="full"
+                        bg="purple.100"
+                        color="purple.800"
+                        height="45px"
+                        width="45px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        fontSize="sm"
+                        m={2}
+                        cursor="pointer"
+                        onClick={() =>
+                          handleBadgeClick(topic.id, partition.partitionId)
+                        }
+                      >
+                        {partition.partitionId}
                       </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={6}>
-                    <Stack direction="row" spacing={4}>
-                      {topic.partitions.map((partition, pIdx) => (
-                        <Button
-                          key={pIdx}
-                          variant="ghost"
-                          onClick={() =>
-                            handleBadgeClick(topic.id, partition.partitionId)
-                          }
-                        >
-                          <Badge
-                            px={4}
-                            py={2}
-                            borderRadius="lg"
-                            bg="purple.50"
-                            color="purple.800"
-                            border="2px"
-                            borderColor="purple.500"
-                            fontSize="md"
-                          >
-                            {partition.partitionId}
-                          </Badge>
-                        </Button>
-                      ))}
-                    </Stack>
-                  </AccordionPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
+                    ))}
+                  </Flex>
+                </Box>
+              </Box>
+            ))}
           </Flex>
         </Flex>
+
         <PartitionDetailsModal
           isOpen={isOpen}
           onClose={onClose}

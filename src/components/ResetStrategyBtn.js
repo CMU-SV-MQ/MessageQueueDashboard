@@ -25,7 +25,7 @@ function ResetStrategyBtn({ update }) {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button bg="purple.50" size="md" leftIcon={<HiOutlineCog />}>
+        <Button bg="purple.50" size="sm" leftIcon={<HiOutlineCog />}>
           Reset Strategy
         </Button>
       </PopoverTrigger>

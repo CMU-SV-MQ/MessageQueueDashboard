@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Flex, Text } from "@chakra-ui/react";
-import NodeLabel from "./NodeLabel";
+// import NodeLabel from "./NodeLabel";
 import { HiOutlineX } from "react-icons/hi";
 
 function BrokerCard({ nodeData, stopBroker }) {
@@ -12,28 +12,28 @@ function BrokerCard({ nodeData, stopBroker }) {
 
   return (
     <Flex
-      h="100px"
-      w="300px"
+      h="80px"
+      w="240px"
       flexDirection="row"
       justifyContent="start"
       alignItems="center"
       border="2px"
       borderColor={borderColor}
       borderRadius="xl"
-      p={4}
+      p={2}
       m={2}
       bg={bgColor}
     >
       <Flex
-        w="64px"
-        h="64px"
+        w="56px"
+        h="56px"
         borderRadius="lg"
         border="4px"
         borderColor={contentColor}
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Text fontSize="4xl" fontWeight="700" color={contentColor}>
+        <Text fontSize="3xl" fontWeight="700" color={contentColor}>
           {nodeData.brokerId}
         </Text>
       </Flex>
@@ -41,17 +41,18 @@ function BrokerCard({ nodeData, stopBroker }) {
         flexDirection="column"
         justifyContent="start"
         alignItems="start"
-        ml="4"
+        ml="3"
       >
-        <Text fontSize="xl" color={contentColor} fontWeight={"700"}>
+        <Text fontSize="md" color={contentColor} fontWeight={"700"}>
           {nodeData.isLeader ? "Leader" : "Follower"}
         </Text>
-        <NodeLabel status={nodeData.status} />
+        {/* <NodeLabel status={nodeData.status} /> */}
       </Flex>
       <Button
+        size={"sm"}
         bg="orange.400"
         ml="auto"
-        leftIcon={<HiOutlineX />}
+        leftIcon={<HiOutlineX size="10px" />}
         isLoading={isAdding}
         onClick={async () => {
           setIsAdding(true);

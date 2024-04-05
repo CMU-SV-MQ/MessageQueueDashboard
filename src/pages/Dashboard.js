@@ -139,13 +139,13 @@ function Dashboard() {
           (broker) => broker.isAlive
         );
 
-        const updatedNodes = activeBrokers.map((node) => {
+        const updatedBrokers = activeBrokers.map((node) => {
           return {
             ...node,
             isLeader: node.brokerId.toString() === leaderData.leaderId,
           };
         });
-        setBrokers(updatedNodes);
+        setBrokers(updatedBrokers);
       })
       .catch((error) => {
         console.error("Error during refresh:", error);
@@ -195,7 +195,7 @@ function Dashboard() {
               <Button
                 colorScheme="purple"
                 variant="ghost"
-                size="md"
+                size="sm"
                 leftIcon={<HiRefresh />}
                 onClick={refreshData}
               >

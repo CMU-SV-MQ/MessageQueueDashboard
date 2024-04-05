@@ -24,7 +24,7 @@ function AddBrokerBtn({ addNode }) {
           <PopoverTrigger>
             <Button
               colorScheme="purple"
-              size="md"
+              size="sm"
               leftIcon={<HiPlus />}
               isLoading={isAdding}
             >
