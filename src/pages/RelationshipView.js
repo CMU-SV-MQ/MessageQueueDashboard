@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
-import Header from "../components/Header";
+import Header from "../components/SideMenu";
 import React, { useMemo, useEffect, useState } from "react";
 import ReactFlow, {
   useNodesState,

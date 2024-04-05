@@ -3,16 +3,19 @@ import { useState, useEffect } from "react";
 // import axios from "axios";
 import { HiOutlineServer, HiRefresh } from "react-icons/hi";
 import PageTitle from "../components/PageTitle";
-import { VStack, Flex, Button, HStack, Spacer } from "@chakra-ui/react";
+// eslint-disable-next-line no-unused-vars
+import { Box, VStack, Flex, Button, HStack, Spacer } from "@chakra-ui/react";
 import AddBrokerBtn from "../components/AddBrokerBtn.js";
 import BrokerCard from "../components/BrokerCard.js";
 import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
-import Header from "../components/Header";
+import Header from "../components/SideMenu.js";
 
 function Dashboard() {
   const [, setLeader] = useState(null);
   const [, setAliveStatus] = useState([]);
   const [brokers, setBrokers] = useState([]);
+
+  const sidebarWidth = "210px";
 
   const getNextServerIndex = () => {
     if (brokers.length === 0) {
@@ -176,38 +179,44 @@ function Dashboard() {
   }, []);
 
   return (
-    <VStack spacing={4}>
+    <Flex>
       <Header />
-      <Flex w="100%" px="2rem" flexDirection="column">
-        <Flex w="100%" justifyContent="space-between" alignItems="center">
-          <PageTitle title="Broker Status" icon={HiOutlineServer} />
-          <Spacer />
-          <HStack spacing="1rem">
-            <Button
-              colorScheme="purple"
-              variant="ghost"
-              size="md"
-              leftIcon={<HiRefresh />}
-              onClick={refreshData}
-            >
-              Refresh
-            </Button>
-            <ResetStrategyBtn settings={{}} update={resetBrokerStrategy} />
-
-            <AddBrokerBtn addNode={addBroker} />
-          </HStack>
+      <VStack
+        spacing={4}
+        ml={sidebarWidth}
+        w={`calc(100% - ${sidebarWidth})`}
+        p="4"
+      >
+        <Flex w="100%" px="2rem" flexDirection="column">
+          <Flex w="100%" justifyContent="space-between" alignItems="center">
+            <PageTitle title="Broker Status" icon={HiOutlineServer} />
+            <Spacer />
+            <HStack spacing="1rem">
+              <Button
+                colorScheme="purple"
+                variant="ghost"
+                size="md"
+                leftIcon={<HiRefresh />}
+                onClick={refreshData}
+              >
+                Refresh
+              </Button>
+              <ResetStrategyBtn settings={{}} update={resetBrokerStrategy} />
+              <AddBrokerBtn addNode={addBroker} />
+            </HStack>
+          </Flex>
+          <Flex w="100%" flexWrap="wrap" justifyContent="start">
+            {brokers.map((node) => (
+              <BrokerCard
+                key={node.brokerId}
+                nodeData={node}
+                stopBroker={() => stopBroker(node.brokerId)}
+              />
+            ))}
+          </Flex>
         </Flex>
-        <Flex w="100%" flexWrap="wrap" justifyContent="start">
-          {brokers.map((node) => (
-            <BrokerCard
-              key={node.brokerId}
-              nodeData={node}
-              stopBroker={() => stopBroker(node.brokerId)}
-            />
-          ))}
-        </Flex>
-      </Flex>
-    </VStack>
+      </VStack>
+    </Flex>
   );
 }
 
