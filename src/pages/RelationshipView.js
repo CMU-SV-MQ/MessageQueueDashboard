@@ -200,7 +200,7 @@ export default function App() {
         const response = await axios.get("http://localhost:8080/broker");
         if (response.data.success) {
           const transformedData = transformApiResponseToData(
-            response.data.broker
+            response.data.brokerRes
           );
           setData(transformedData);
         } else {
@@ -215,51 +215,48 @@ export default function App() {
   }, []);
 
   const transformApiResponseToData = (brokerData) => {
-    // Initialize structures to hold our topics, consumer groups, and relationships
     const topics = [];
     const consumerGroups = [];
     const relationships = [];
-    const topicPartitionsSet = new Set();
 
     // Process topic partitions
-    brokerData.topicPartitions.forEach((topicPartition) => {
-      const topicObj = { id: topicPartition.topic, partitions: [] };
-
-      topicPartition.partitions.forEach((partition) => {
-        const partitionKey = `P${partition.partitionId}`;
-        topicObj.partitions.push(partitionKey);
-        // Keep track of unique topic-partition combinations
-        topicPartitionsSet.add(`${topicPartition.topic}_${partitionKey}`);
-      });
-
-      topics.push(topicObj);
-    });
+    Object.entries(brokerData.topicPartitions).forEach(
+      ([topicName, partitions]) => {
+        const topicObj = {
+          id: topicName,
+          partitions: partitions.map((part) => `P${part.partitionId}`),
+        };
+        topics.push(topicObj);
+      }
+    );
 
     // Process consumer groups
-    brokerData.consumerGroups.forEach((group) => {
-      const groupObj = { id: group.consumerGroupId, consumers: [] };
+    Object.entries(brokerData.consumerGroups).forEach(
+      ([groupId, groupInfo]) => {
+        const groupObj = {
+          id: groupId,
+          consumers: groupInfo.consumerRes.map((consumer) => consumer.memberId),
+        };
+        consumerGroups.push(groupObj);
 
-      group.consumers.forEach((consumer) => {
-        groupObj.consumers.push(consumer.memberId);
-
-        consumer.topicPartitions.forEach((tp) => {
-          tp.partitions.forEach((partition) => {
-            const partitionKey = `P${partition.partitionId}`;
-            if (topicPartitionsSet.has(`${tp.topic}_${partitionKey}`)) {
-              relationships.push({
-                consumerGroup: group.consumerGroupId,
-                consumer: consumer.memberId,
-                topic: tp.topic,
-                partition: partitionKey,
-                type: "commit",
+        // Build relationships from assignedTopicPartitions
+        groupInfo.consumerRes.forEach((consumer) => {
+          Object.entries(consumer.assignedTopicPartitions).forEach(
+            ([topicName, partitions]) => {
+              partitions.forEach((part) => {
+                relationships.push({
+                  consumerGroup: groupId,
+                  consumer: consumer.memberId,
+                  topic: topicName,
+                  partition: `P${part.partitionId}`,
+                  type: "commit", // Assuming 'commit' is the type of relationship
+                });
               });
             }
-          });
+          );
         });
-      });
-
-      consumerGroups.push(groupObj);
-    });
+      }
+    );
 
     return { topics, consumerGroups, relationships };
   };

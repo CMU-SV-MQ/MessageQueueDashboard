@@ -37,21 +37,45 @@ function BrokerDetail() {
     useState(null);
   const [topics, setTopics] = useState([]);
 
+  // const fetchBrokerData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:8080/broker");
+  //     const brokerData = response.data;
+  //     const formattedTopics = brokerData.broker.topicPartitions.map(
+  //       (topic) => ({
+  //         id: topic.topic,
+  //         partitions: topic.partitions.map((partition) => ({
+  //           partitionId: `P${partition.partitionId}`,
+  //           messages: partition.messages,
+  //         })),
+  //       })
+  //     );
+  //     setTopics(formattedTopics);
+  //     console.log(formattedTopics);
+  //   } catch (error) {
+  //     console.error("Failed to fetch broker data:", error);
+  //   }
+  // };
+
   const fetchBrokerData = async () => {
     try {
       const response = await axios.get("http://localhost:8080/broker");
       const brokerData = response.data;
-      const formattedTopics = brokerData.broker.topicPartitions.map(
-        (topic) => ({
-          id: topic.topic,
-          partitions: topic.partitions.map((partition) => ({
-            partitionId: `P${partition.partitionId}`,
-            messages: partition.messages,
-          })),
-        })
-      );
+
+      const formattedTopics = Object.entries(
+        brokerData.brokerRes.topicPartitions
+      ).map(([topic, partitions]) => ({
+        id: topic,
+        partitions: partitions.map((partition) => ({
+          partitionId: `P${partition.partitionId}`,
+          messages: partition.messages,
+          groupCurrentOffsets: partition.groupCurrentOffsets,
+          groupCommittedOffsets: partition.groupCommittedOffsets,
+        })),
+      }));
+
       setTopics(formattedTopics);
-      // console.log(formattedTopics);
+      console.log(formattedTopics);
     } catch (error) {
       console.error("Failed to fetch broker data:", error);
     }
@@ -68,7 +92,11 @@ function BrokerDetail() {
         (p) => p.partitionId === partitionId
       );
       if (partition) {
-        setSelectedPartitionDetails(partition);
+        setSelectedPartitionDetails({
+          ...partition,
+          groupCurrentOffsets: partition.groupCurrentOffsets,
+          groupCommittedOffsets: partition.groupCommittedOffsets,
+        });
         onOpen();
       }
     }
