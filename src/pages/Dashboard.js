@@ -129,8 +129,8 @@ function Dashboard() {
   const refreshData = () => {
     Promise.all([getBrokerLeader(), checkBrokersAlive()])
       .then(([leaderData, aliveData]) => {
-        console.log("Leader:", leaderData);
-        console.log("AliveData:", aliveData);
+        // console.log("Leader:", leaderData);
+        // console.log("AliveData:", aliveData);
 
         setLeader(leaderData);
         setAliveStatus(aliveData);
@@ -189,7 +189,7 @@ function Dashboard() {
       >
         <Flex w="100%" px="2rem" flexDirection="column">
           <Flex w="100%" justifyContent="space-between" alignItems="center">
-            <PageTitle title="Broker Status" icon={HiOutlineServer} />
+            <PageTitle title="Broker Management" icon={HiOutlineServer} />
             <Spacer />
             <HStack spacing="1rem">
               <Button

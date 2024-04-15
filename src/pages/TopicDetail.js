@@ -6,25 +6,9 @@ import Header from "../components/SideMenu";
 import PageTitle from "../components/PageTitle";
 import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import PartitionDetailsModal from "../components/PartitionDetailPopup";
-import {
-  Box,
-  Button,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Badge,
-  useDisclosure,
-  Stack,
-  VStack,
-  Flex,
-  Text,
-  HStack,
-  Spacer,
-} from "@chakra-ui/react";
+import { Box, useDisclosure, VStack, Flex, Text } from "@chakra-ui/react";
 
-function BrokerDetail() {
+function TopicDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedPartitionDetails, setSelectedPartitionDetails] =
     useState(null);
@@ -88,8 +72,8 @@ function BrokerDetail() {
         w={`calc(100% - ${sidebarWidth})`}
         p="4"
       >
-        <Flex direction="column">
-          <PageTitle title="Topic Monitoring" icon={HiOutlineDatabase} />
+        <Flex w="100%" px="2rem" flexDirection="column">
+          <PageTitle title="Topic Detail" icon={HiOutlineDatabase} />
           <Flex wrap="wrap" justify="space-around">
             {topics.map((topic, idx) => (
               <Box
@@ -155,4 +139,4 @@ function BrokerDetail() {
   );
 }
 
-export default BrokerDetail;
+export default TopicDetail;

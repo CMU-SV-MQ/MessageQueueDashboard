@@ -69,8 +69,11 @@ function Header() {
         <SidebarLink to="/relationshipView" icon={HiOutlineChartBar}>
           Relationship View
         </SidebarLink>
-        <SidebarLink to="/brokerDetail" icon={HiOutlineDatabase}>
+        <SidebarLink to="/topicDetail" icon={HiOutlineDatabase}>
           Topic Detail
+        </SidebarLink>
+        <SidebarLink to="/operations" icon={HiOutlineDatabase}>
+          Operations
         </SidebarLink>
       </VStack>
     </Box>

@@ -21,7 +21,7 @@
 //         <Link href="/relationshipView" p="2">
 //           Relationship View
 //         </Link>
-//         <Link href="/brokerDetail" p="2">
+//         <Link href="/topicDetail" p="2">
 //           Topic Detail
 //         </Link>
 //       </VStack>
