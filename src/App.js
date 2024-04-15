@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 // import Monitor from "./pages/Monitor";
 import TopicDetail from "./pages/TopicDetail";
 import RelationshipView from "./pages/RelationshipView";
-import TopicOperations from "./pages/TopicOpearations";
+import TopicOperations from "./pages/Opearations";
 
 function App() {
   return (
