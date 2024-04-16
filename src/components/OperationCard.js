@@ -1,30 +1,37 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-// Card component
-const OperationCard = ({ title, children }) => {
+const OperationCard = ({ title, children, buttonText }) => {
   return (
-    <Box boxShadow="md" width="calc(50% - 1rem)" m="2">
-      <Box
-        bgGradient="linear(to-r, purple.600, purple.300)"
-        // bgColor={"purple.50"}
-        borderRadius="lg"
-        p={3}
-        borderBottomRadius={0}
-      >
-        <Text fontSize="lg" color="white">
-          {title}
-        </Text>
-      </Box>
-      <Box
-        bg="gray.50"
-        p={3}
-        borderTopRadius={0}
-        borderBottomRadius="lg"
-        minHeight="100px" // Minimum height to ensure that cards with less content are not too small
-      >
-        {children}
-      </Box>
+    <Box boxShadow="md" borderRadius="lg">
+      <Card borderRadius="xl">
+        <CardHeader bgGradient="linear(to-r, purple.600, purple.300)">
+          <Heading size="md" color="white">
+            {title}
+          </Heading>
+        </CardHeader>
+        <CardBody
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          p="1rem"
+        >
+          {children}
+        </CardBody>
+        <CardFooter>
+          <Button colorScheme="purple" variant="outline" w="fit-content">
+            {buttonText}
+          </Button>
+        </CardFooter>
+      </Card>
     </Box>
   );
 };
@@ -32,6 +39,7 @@ const OperationCard = ({ title, children }) => {
 OperationCard.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  buttonText: PropTypes.string,
 };
 
 export default OperationCard;
