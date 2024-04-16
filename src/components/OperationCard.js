@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-const OperationCard = ({ title, children, buttonText }) => {
+const OperationCard = ({ title, children, buttonText, onClick }) => {
   return (
     <Box boxShadow="md" borderRadius="lg">
       <Card borderRadius="xl">
@@ -27,7 +27,12 @@ const OperationCard = ({ title, children, buttonText }) => {
           {children}
         </CardBody>
         <CardFooter>
-          <Button colorScheme="purple" variant="outline" w="fit-content">
+          <Button
+            onClick={onClick}
+            colorScheme="purple"
+            variant="outline"
+            w="fit-content"
+          >
             {buttonText}
           </Button>
         </CardFooter>
@@ -40,6 +45,7 @@ OperationCard.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   buttonText: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default OperationCard;
