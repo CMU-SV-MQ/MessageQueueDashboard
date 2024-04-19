@@ -1,6 +1,6 @@
 import {
   Box,
-  Heading,
+  Text,
   Button,
   Card,
   CardHeader,
@@ -12,11 +12,14 @@ import PropTypes from "prop-types";
 const OperationCard = ({ title, children, buttonText, onClick }) => {
   return (
     <Box boxShadow="md" borderRadius="lg">
-      <Card borderRadius="xl">
-        <CardHeader bgGradient="linear(to-r, purple.600, purple.300)">
-          <Heading size="md" color="white">
+      <Card>
+        <CardHeader
+          bgGradient="linear(to-r, purple.600, purple.300)"
+          _first={{ borderTopRadius: "xl" }}
+        >
+          <Text size="lg" color="white">
             {title}
-          </Heading>
+          </Text>
         </CardHeader>
         <CardBody
           display="flex"
@@ -26,7 +29,7 @@ const OperationCard = ({ title, children, buttonText, onClick }) => {
         >
           {children}
         </CardBody>
-        <CardFooter>
+        <CardFooter display="flex" justifyContent="center" p="1rem">
           <Button
             onClick={onClick}
             colorScheme="purple"

@@ -14,9 +14,11 @@ import {
   GridItem,
   NumberInput,
   NumberInputField,
+  useToast,
 } from "@chakra-ui/react";
 
 function Operations() {
+  const toast = useToast();
   const [topicName, setTopicName] = useState("");
   const [partitionNumber, setPartitionNumber] = useState();
   const [subscribeTopic, setSubscribeTopic] = useState("");
@@ -36,6 +38,17 @@ function Operations() {
     // This is where you'd fetch data from the API
   }, []);
 
+  const showSuccessToast = (operation, details) => {
+    toast({
+      title: `${operation} successful`,
+      description: details,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  };
+
   const handleCreateTopic = async () => {
     try {
       const response = await axios.post(
@@ -45,9 +58,21 @@ function Operations() {
           partitionNumber: Number(partitionNumber),
         }
       );
-      console.log(response.data); // Handle response appropriately
+      console.log(response.data);
+      showSuccessToast(
+        "Create Topic",
+        `Topic ${topicName} with ${partitionNumber} partitions created successfully.`
+      );
     } catch (error) {
-      console.error("Failed to create topic:", error); // Handle error appropriately
+      console.error("Failed to create topic:", error);
+      toast({
+        title: "Failed to create topic",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 
@@ -60,6 +85,10 @@ function Operations() {
         consumerId: consumerId,
       });
       console.log("Subscribe response:", response.data);
+      showSuccessToast(
+        "Subscribe to Topic",
+        `Subscribed to ${subscribeTopic} in group ${groupId} with consumer ID ${consumerId}.`
+      );
     } catch (error) {
       console.error("Failed to subscribe to topic:", error);
     }
@@ -69,13 +98,25 @@ function Operations() {
     const url = `http://localhost:8080/producer/messages`;
     try {
       const response = await axios.post(url, {
-        partitionkey: "absdcd",
+        partitionKey: "absdcd", // Note: property names should be in camelCase
         topic: messageTopic,
         value: messageValue,
       });
       console.log("Publish response:", response.data);
+      showSuccessToast(
+        "Publish Message",
+        `Message published to topic ${messageTopic} with value: "${messageValue}".`
+      );
     } catch (error) {
       console.error("Failed to publish message:", error);
+      toast({
+        title: "Failed to publish message",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 
@@ -84,8 +125,20 @@ function Operations() {
     try {
       const response = await axios.get(url);
       console.log("Consume response:", response.data);
+      showSuccessToast(
+        "Consume Messages",
+        `Consumed ${messageCount} messages from topic ${consumeTopic} for consumer ID ${consumeConsumerId}.`
+      );
     } catch (error) {
       console.error("Failed to consume messages:", error);
+      toast({
+        title: "Failed to consume messages",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 
@@ -94,8 +147,20 @@ function Operations() {
     try {
       const response = await axios.post(url);
       console.log("Offset commit successful:", response);
+      showSuccessToast(
+        "Commit Offset",
+        `Offsets committed for topic ${commitTopic} with consumer ID ${commitConsumerId}.`
+      );
     } catch (error) {
       console.error("Failed to commit offsets:", error);
+      toast({
+        title: "Failed to commit offsets",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 
