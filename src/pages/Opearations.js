@@ -12,6 +12,8 @@ import {
   Input,
   Grid,
   GridItem,
+  InputGroup,
+  InputLeftAddon,
   NumberInput,
   NumberInputField,
   useToast,
@@ -166,6 +168,7 @@ function Operations() {
 
   const sidebarWidth = "210px";
   const pageContentPadding = "1.5rem"; // Increase padding here as necessary
+  const fixedAddonWidth = "120px";
 
   return (
     <Flex>
@@ -185,19 +188,28 @@ function Operations() {
                 buttonText="Create"
                 onClick={handleCreateTopic}
               >
-                <Input
-                  placeholder="Topic name"
-                  mb="2"
-                  value={topicName}
-                  onChange={(e) => setTopicName(e.target.value)}
-                />
-                <NumberInput
-                  min={1}
-                  value={partitionNumber}
-                  onChange={(_, value) => setPartitionNumber(value)}
-                >
-                  <NumberInputField placeholder="Partition number" />
-                </NumberInput>
+                <InputGroup mb="2">
+                  <InputLeftAddon width={fixedAddonWidth}>
+                    Topic Name
+                  </InputLeftAddon>
+                  <Input
+                    value={topicName}
+                    onChange={(e) => setTopicName(e.target.value)}
+                  />
+                </InputGroup>
+                <InputGroup mb="2">
+                  <InputLeftAddon width={fixedAddonWidth}>
+                    Partitions
+                  </InputLeftAddon>
+                  <NumberInput
+                    min={1}
+                    value={partitionNumber}
+                    onChange={(_, value) => setPartitionNumber(value)}
+                    flex="1"
+                  >
+                    <NumberInputField />
+                  </NumberInput>
+                </InputGroup>
               </Card>
             </GridItem>
             <GridItem>
@@ -206,24 +218,31 @@ function Operations() {
                 buttonText="Subscribe"
                 onClick={handleSubscribeToTopic}
               >
-                <Input
-                  placeholder="Topic"
-                  mb="2"
-                  value={subscribeTopic}
-                  onChange={(e) => setSubscribeTopic(e.target.value)}
-                />
-                <Input
-                  placeholder="Group ID"
-                  mb="2"
-                  value={groupId}
-                  onChange={(e) => setGroupId(e.target.value)}
-                />
-                <Input
-                  placeholder="Consumer ID"
-                  mb="2"
-                  value={consumerId}
-                  onChange={(e) => setConsumerId(e.target.value)}
-                />
+                <InputGroup mb="2">
+                  <InputLeftAddon width={fixedAddonWidth}>Topic</InputLeftAddon>
+                  <Input
+                    value={subscribeTopic}
+                    onChange={(e) => setSubscribeTopic(e.target.value)}
+                  />
+                </InputGroup>
+                <InputGroup mb="2">
+                  <InputLeftAddon width={fixedAddonWidth}>
+                    Group ID
+                  </InputLeftAddon>
+                  <Input
+                    value={groupId}
+                    onChange={(e) => setGroupId(e.target.value)}
+                  />
+                </InputGroup>
+                <InputGroup mb="2">
+                  <InputLeftAddon width={fixedAddonWidth}>
+                    Consumer ID
+                  </InputLeftAddon>
+                  <Input
+                    value={consumerId}
+                    onChange={(e) => setConsumerId(e.target.value)}
+                  />
+                </InputGroup>
               </Card>
             </GridItem>
           </Grid>
@@ -241,18 +260,20 @@ function Operations() {
               buttonText="Publish"
               onClick={handlePublishMessage}
             >
-              <Input
-                placeholder="Message value"
-                mb="2"
-                value={messageValue}
-                onChange={(e) => setMessageValue(e.target.value)}
-              />
-              <Input
-                placeholder="Topic"
-                mb="2"
-                value={messageTopic}
-                onChange={(e) => setMessageTopic(e.target.value)}
-              />
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>Message</InputLeftAddon>
+                <Input
+                  value={messageValue}
+                  onChange={(e) => setMessageValue(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>Topic</InputLeftAddon>
+                <Input
+                  value={messageTopic}
+                  onChange={(e) => setMessageTopic(e.target.value)}
+                />
+              </InputGroup>
             </Card>
           </GridItem>
           <GridItem>
@@ -261,31 +282,43 @@ function Operations() {
               buttonText="Consume"
               onClick={handleConsumeMessages}
             >
-              <Input
-                placeholder="Topic"
-                mb="2"
-                value={consumeTopic}
-                onChange={(e) => setConsumeTopic(e.target.value)}
-              />
-              <Input
-                placeholder="Group ID"
-                mb="2"
-                value={consumeGroupId}
-                onChange={(e) => setConsumeGroupId(e.target.value)}
-              />
-              <Input
-                placeholder="Consumer ID"
-                mb="2"
-                value={consumeConsumerId}
-                onChange={(e) => setConsumeConsumerId(e.target.value)}
-              />
-              <NumberInput
-                min={1}
-                value={messageCount}
-                onChange={(_, value) => setMessageCount(value)}
-              >
-                <NumberInputField placeholder="Message count" />
-              </NumberInput>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>Topic</InputLeftAddon>
+                <Input
+                  value={consumeTopic}
+                  onChange={(e) => setConsumeTopic(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>
+                  Group ID
+                </InputLeftAddon>
+                <Input
+                  value={consumeGroupId}
+                  onChange={(e) => setConsumeGroupId(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>
+                  Consumer ID
+                </InputLeftAddon>
+                <Input
+                  value={consumeConsumerId}
+                  onChange={(e) => setConsumeConsumerId(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>
+                  Msg Count
+                </InputLeftAddon>
+                <NumberInput
+                  min={1}
+                  value={messageCount}
+                  onChange={(_, value) => setMessageCount(value)}
+                >
+                  <NumberInputField />
+                </NumberInput>
+              </InputGroup>
             </Card>
           </GridItem>
           <GridItem>
@@ -294,24 +327,31 @@ function Operations() {
               buttonText="Commit"
               onClick={handleCommitOffset}
             >
-              <Input
-                placeholder="Group ID"
-                mb="2"
-                value={commitGroupId}
-                onChange={(e) => setCommitGroupId(e.target.value)}
-              />
-              <Input
-                placeholder="Consumer ID"
-                mb="2"
-                value={commitConsumerId}
-                onChange={(e) => setCommitConsumerId(e.target.value)}
-              />
-              <Input
-                placeholder="Topic"
-                mb="2"
-                value={commitTopic}
-                onChange={(e) => setCommitTopic(e.target.value)}
-              />
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>
+                  Group ID
+                </InputLeftAddon>
+                <Input
+                  value={commitGroupId}
+                  onChange={(e) => setCommitGroupId(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>
+                  Consumer ID
+                </InputLeftAddon>
+                <Input
+                  value={commitConsumerId}
+                  onChange={(e) => setCommitConsumerId(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup mb="2">
+                <InputLeftAddon width={fixedAddonWidth}>Topic</InputLeftAddon>
+                <Input
+                  value={commitTopic}
+                  onChange={(e) => setCommitTopic(e.target.value)}
+                />
+              </InputGroup>
             </Card>
           </GridItem>
         </Grid>
