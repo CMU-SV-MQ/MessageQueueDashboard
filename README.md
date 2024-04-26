@@ -26,3 +26,14 @@ MessageQueueDashboard is a frontend application built with React and Chakra-UI. 
    npm start
 
 Open your web browser and visit http://localhost:3000 to access the MessageQueueDashboard application.
+
+## Dependencies
+
+The MessageQueueDashboard application relies on the following major dependencies:
+
+ - React
+ - Chakra-UI
+ - Axios
+ - React Icons
+
+For a complete list of dependencies, please refer to the package.json file.
