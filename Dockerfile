@@ -1,11 +1,17 @@
 FROM node:22
 
-USER 1000
 
 EXPOSE 3000
+
+WORKDIR /app
+
+RUN chmod -R 777 /app
 
 COPY . .
 
 RUN npm install
 
-ENTRYPOINT ["sh", "-c", "npm start"]
+USER 1000
+
+CMD ["npm", "start"]
+
