@@ -1,0 +1,4 @@
+{
+    "proxy-dns": "mq-proxy-0.mq-proxy.default.svc.cluster.local",
+    "proxy-port": "8080"
+}

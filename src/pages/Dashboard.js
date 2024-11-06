@@ -9,6 +9,10 @@ import AddBrokerBtn from "../components/AddBrokerBtn.js";
 import BrokerCard from "../components/BrokerCard.js";
 import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
 import Header from "../components/SideMenu.js";
+import secrets from "../config.json";
+
+const proxyHost = secrets["proxy-dns"];
+const proxyPort = secrets["proxy-port"];
 
 function Dashboard() {
   const [, setLeader] = useState(null);
@@ -33,7 +37,7 @@ function Dashboard() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/broker/addBroker", {
+      const response = await fetch(`http://${proxyHost}:${proxyPort}/broker/addBroker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +69,7 @@ function Dashboard() {
     const requestBody = { serverIndex: brokerId };
 
     try {
-      const response = await fetch("http://localhost:8080/broker/stopBroker", {
+      const response = await fetch(`http://${proxyHost}:${proxyPort}/broker/stopBroker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +94,7 @@ function Dashboard() {
 
   const getBrokerLeader = () => {
     console.log("getBrokerLeader called");
-    return fetch("http://localhost:8080/broker/leader")
+    return fetch(`http://${proxyHost}:${proxyPort}/broker/leader`)
       .then((response) => {
         console.log("getBrokerLeader Response received:", response);
         if (!response.ok) {
@@ -109,7 +113,7 @@ function Dashboard() {
 
   const checkBrokersAlive = () => {
     console.log("checkBrokersAlive called");
-    return fetch("http://localhost:8080/broker/checkAlive")
+    return fetch(`http://${proxyHost}:${proxyPort}/broker/checkAlive`)
       .then((response) => {
         console.log("checkBrokersAlive Response received:", response);
         if (!response.ok) {
@@ -154,7 +158,7 @@ function Dashboard() {
 
   const resetBrokerStrategy = async (selectedStrategy) => {
     try {
-      const endpoint = `http://localhost:8080/broker/brokerStrategy/${selectedStrategy}`;
+      const endpoint = `http://${proxyHost}:${proxyPort}/broker/brokerStrategy/${selectedStrategy}`;
       const response = await fetch(endpoint, {
         method: "POST",
       });

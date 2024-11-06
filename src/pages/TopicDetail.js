@@ -7,6 +7,10 @@ import PageTitle from "../components/PageTitle";
 import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import PartitionDetailsModal from "../components/PartitionDetailPopup";
 import { Box, useDisclosure, VStack, Flex, Text } from "@chakra-ui/react";
+import secrets from "../config.json";
+
+const proxyHost = secrets["proxy-dns"];
+const proxyPort = secrets["proxy-port"];
 
 function TopicDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,7 +22,7 @@ function TopicDetail() {
 
   const fetchBrokerData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/broker");
+      const response = await axios.get(`http://${proxyHost}:${proxyPort}/broker`);
       const brokerData = response.data;
 
       const formattedTopics = Object.entries(
