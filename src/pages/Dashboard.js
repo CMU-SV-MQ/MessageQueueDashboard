@@ -11,8 +11,7 @@ import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
 import Header from "../components/SideMenu.js";
 import secrets from "../config.json";
 
-const proxyHost = secrets["proxy-dns"];
-const proxyPort = secrets["proxy-port"];
+const proxyUrl = secrets["proxy-url"];
 
 function Dashboard() {
   const [, setLeader] = useState(null);
@@ -37,7 +36,7 @@ function Dashboard() {
     };
 
     try {
-      const response = await fetch(`http://${proxyHost}:${proxyPort}/broker/addBroker`, {
+      const response = await fetch(`${proxyUrl}/broker/addBroker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +68,7 @@ function Dashboard() {
     const requestBody = { serverIndex: brokerId };
 
     try {
-      const response = await fetch(`http://${proxyHost}:${proxyPort}/broker/stopBroker`, {
+      const response = await fetch(`${proxyUrl}/broker/stopBroker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +93,7 @@ function Dashboard() {
 
   const getBrokerLeader = () => {
     console.log("getBrokerLeader called");
-    return fetch(`http://${proxyHost}:${proxyPort}/broker/leader`)
+    return fetch(`${proxyUrl}/broker/leader`)
       .then((response) => {
         console.log("getBrokerLeader Response received:", response);
         if (!response.ok) {
@@ -113,7 +112,7 @@ function Dashboard() {
 
   const checkBrokersAlive = () => {
     console.log("checkBrokersAlive called");
-    return fetch(`http://${proxyHost}:${proxyPort}/broker/checkAlive`)
+    return fetch(`${proxyUrl}/broker/checkAlive`)
       .then((response) => {
         console.log("checkBrokersAlive Response received:", response);
         if (!response.ok) {
@@ -158,7 +157,7 @@ function Dashboard() {
 
   const resetBrokerStrategy = async (selectedStrategy) => {
     try {
-      const endpoint = `http://${proxyHost}:${proxyPort}/broker/brokerStrategy/${selectedStrategy}`;
+      const endpoint = `${proxyUrl}/broker/brokerStrategy/${selectedStrategy}`;
       const response = await fetch(endpoint, {
         method: "POST",
       });

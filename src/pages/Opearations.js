@@ -20,8 +20,7 @@ import {
 } from "@chakra-ui/react";
 import secrets from "../config.json";
 
-const proxyHost = secrets["proxy-dns"];
-const proxyPort = secrets["proxy-port"];
+const proxyUrl = secrets["proxy-url"];
 
 function Operations() {
   const toast = useToast();
@@ -58,7 +57,7 @@ function Operations() {
   const handleCreateTopic = async () => {
     try {
       const response = await axios.post(
-        `http://${proxyHost}:${proxyPort}/producer/topic`,
+        `${proxyUrl}/producer/topic`,
         {
           topic: topicName,
           partitionNumber: Number(partitionNumber),
@@ -83,7 +82,7 @@ function Operations() {
   };
 
   const handleSubscribeToTopic = async () => {
-    const url = `http://${proxyHost}:${proxyPort}/consumerGroup/${groupId}`;
+    const url = `${proxyUrl}/consumerGroup/${groupId}`;
     try {
       const response = await axios.post(url, {
         topic: subscribeTopic,
@@ -101,7 +100,7 @@ function Operations() {
   };
 
   const handlePublishMessage = async () => {
-    const url = `http://${proxyHost}:${proxyPort}/producer/messages`;
+    const url = `${proxyUrl}/producer/messages`;
     try {
       const response = await axios.post(url, {
         partitionKey: "absdcd", // Note: property names should be in camelCase
@@ -127,7 +126,7 @@ function Operations() {
   };
 
   const handleConsumeMessages = async () => {
-    const url = `http://${proxyHost}:${proxyPort}/consumerGroup/${consumeGroupId}/consumer/${consumeConsumerId}/topic/${consumeTopic}/messages/${messageCount}`;
+    const url = `${proxyUrl}/consumerGroup/${consumeGroupId}/consumer/${consumeConsumerId}/topic/${consumeTopic}/messages/${messageCount}`;
     try {
       const response = await axios.get(url);
       console.log("Consume response:", response.data);
@@ -149,7 +148,7 @@ function Operations() {
   };
 
   const handleCommitOffset = async () => {
-    const url = `http://${proxyHost}:${proxyPort}/consumerGroup/${commitGroupId}/consumer/${commitConsumerId}/topic/${commitTopic}/offsets`;
+    const url = `${proxyUrl}/consumerGroup/${commitGroupId}/consumer/${commitConsumerId}/topic/${commitTopic}/offsets`;
     try {
       const response = await axios.post(url);
       console.log("Offset commit successful:", response);

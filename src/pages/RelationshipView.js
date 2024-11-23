@@ -16,8 +16,7 @@ import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 import GroupNode from "../components/GroupNode";
 import secrets from "../config.json";
 
-const proxyHost = secrets["proxy-dns"];
-const proxyPort = secrets["proxy-port"];
+const proxyUrl = secrets["proxy-url"];
 
 const columnXPosition = {
   topics: 100,
@@ -199,7 +198,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://${proxyHost}:${proxyPort}/broker`);
+        const response = await axios.get(`${proxyUrl}/broker`);
         if (response.data.success) {
           const transformedData = transformApiResponseToData(
             response.data.brokerRes
