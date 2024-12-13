@@ -1,6 +1,9 @@
 import {
   Button,
-  Flex, Input, InputGroup, InputLeftAddon,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftAddon,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -39,7 +42,7 @@ function AddBrokerBtn({ addNode }) {
             <PopoverBody>
               Are you sure you want to add a broker?
               <InputGroup mb="2">
-                <InputLeftAddon width={10}>Message</InputLeftAddon>
+                <InputLeftAddon width={90}>Node ID</InputLeftAddon>
                 <Input
                   value={nodeId}
                   onChange={(e) => setNodeId(e.target.value)}
