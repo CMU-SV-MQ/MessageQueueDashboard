@@ -29,10 +29,13 @@ function Dashboard() {
     }
   };
 
-  const addBroker = async () => {
+  const addBroker = async (brokerId) => {
     const serverIndex = getNextServerIndex();
     const requestBody = {
-      serverIndex,
+      nodeId: brokerId,
+      host: secrets.brokerHostNamePattern.replace("NODEID", brokerId),
+      port: secrets.brokerPort,
+      groupId: secrets.groupId
     };
 
     try {
@@ -65,7 +68,7 @@ function Dashboard() {
   };
 
   const stopBroker = async (brokerId) => {
-    const requestBody = { serverIndex: brokerId };
+    const requestBody = { nodeId: brokerId, groupId: secrets.groupId };
 
     try {
       const response = await fetch(`${proxyUrl}/broker/stopBroker`, {

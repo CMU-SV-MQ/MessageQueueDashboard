@@ -1,3 +1,6 @@
 {
-    "proxy-url": "http://k8s-default-mqalb-e4c9b0bd4e-1587747228.us-west-1.elb.amazonaws.com"
+    "proxy-url": "http://k8s-default-mqalb-e4c9b0bd4e-1587747228.us-west-1.elb.amazonaws.com",
+    "groupId": "02511d47-d67c-49a3-9011-abb3109a44c1",
+    "brokerHostNamePattern": "mq-NODEID.mq.default.svc.cluster.local",
+    "brokerPort": 8000
 }
