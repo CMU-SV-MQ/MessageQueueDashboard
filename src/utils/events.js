@@ -64,7 +64,7 @@ function sortEventsByTimestamp(events, order = "asc") {
 }
 
 function groupEventsByNodeId(events) {
-  let group = {};
+  const group = {};
   events.forEach((event) => {
     if (group[event.node_id]) {
       group[event.node_id].push(event);
@@ -73,14 +73,15 @@ function groupEventsByNodeId(events) {
     }
   });
 
-  Object.keys(group).forEach((node_id) => {
-    group[node_id] = sortEventsByTimestamp(group[node_id]);
+  // eslint-disable-next-line camelcase
+  Object.keys(group).forEach((nodeId) => {
+    group[nodeId] = sortEventsByTimestamp(group[nodeId]);
   });
   return group;
 }
 
 function groupElectionEventsByTerm(events) {
-  let group = {};
+  const group = {};
   events.forEach((event) => {
     if (isElectionEvent(event)) {
       if (group[event.data.term]) {
