@@ -25,6 +25,8 @@ MessageQueueDashboard is a frontend application built with React and Chakra-UI. 
    ```shell
    npm start
 
+If you are running the message queue application locally, use copy `src/local.config.json` into `src/config.json` before running the dashboard.
+
 Open your web browser and visit http://localhost:3000 to access the MessageQueueDashboard application.
 
 ## Dependencies

@@ -1,0 +1,6 @@
+{
+    "proxy-url": "http://localhost:9090",
+    "groupId": "02511d47-d67c-49a3-9011-abb3109a44c1",
+    "brokerHostNamePattern": "NODEID",
+    "brokerPort": 8000
+}
