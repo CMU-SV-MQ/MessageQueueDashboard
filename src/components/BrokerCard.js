@@ -56,7 +56,7 @@ function BrokerCard({ nodeData, stopBroker }) {
         isLoading={isAdding}
         onClick={async () => {
           setIsAdding(true);
-          await stopBroker();
+          await stopBroker(nodeData.brokerId);
           setIsAdding(false);
         }}
       >

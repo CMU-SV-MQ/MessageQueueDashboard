@@ -9,7 +9,7 @@ import TopicOperations from "./pages/Opearations";
 function App() {
   return (
     <ChakraProvider>
-      <Router>
+      <Router basename={"/dashboard"}>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           {/* <Route path="/monitor" element={<Monitor />} /> */}

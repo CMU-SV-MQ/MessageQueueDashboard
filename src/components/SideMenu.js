@@ -63,16 +63,16 @@ function Header() {
         // display={!collapsed ? "flex" : "none"}
         // p={collapsed ? "0" : "2"} // Adds padding when not collapsed
       >
-        <SidebarLink to="/" icon={HiOutlineServer}>
+        <SidebarLink to="/dashboard" icon={HiOutlineServer}>
           Broker Management
         </SidebarLink>
-        <SidebarLink to="/relationshipView" icon={HiOutlineChartBar}>
+        <SidebarLink to="/dashboard/relationshipView" icon={HiOutlineChartBar}>
           Relationship View
         </SidebarLink>
-        <SidebarLink to="/topicDetail" icon={HiOutlineDatabase}>
+        <SidebarLink to="/dashboard/topicDetail" icon={HiOutlineDatabase}>
           Topic Detail
         </SidebarLink>
-        <SidebarLink to="/operations" icon={HiOutlineDatabase}>
+        <SidebarLink to="/dashboard/operations" icon={HiOutlineDatabase}>
           Operations
         </SidebarLink>
       </VStack>

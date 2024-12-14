@@ -1,6 +1,9 @@
 import {
   Button,
   Flex,
+  Input,
+  InputGroup,
+  InputLeftAddon,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -17,6 +20,7 @@ import PropTypes from "prop-types";
 function AddBrokerBtn({ addNode }) {
   const initRef = useRef();
   const [isAdding, setIsAdding] = useState(false);
+  const [nodeId, setNodeId] = useState("");
   return (
     <Popover initialFocusRef={initRef}>
       {({ onClose }) => (
@@ -37,6 +41,13 @@ function AddBrokerBtn({ addNode }) {
             <PopoverHeader>Confirmation</PopoverHeader>
             <PopoverBody>
               Are you sure you want to add a broker?
+              <InputGroup mb="2">
+                <InputLeftAddon width={90}>Node ID</InputLeftAddon>
+                <Input
+                  value={nodeId}
+                  onChange={(e) => setNodeId(e.target.value)}
+                />
+              </InputGroup>
               <Flex mt={4}>
                 <Button
                   colorScheme="purple"
@@ -44,7 +55,7 @@ function AddBrokerBtn({ addNode }) {
                   isLoading={isAdding}
                   onClick={async () => {
                     setIsAdding(true);
-                    await addNode();
+                    await addNode(nodeId);
                     onClose();
                     setIsAdding(false);
                   }}

@@ -14,6 +14,9 @@ import "reactflow/dist/style.css";
 import { ChakraProvider, Box, Text } from "@chakra-ui/react";
 // import { motion } from "framer-motion";
 import GroupNode from "../components/GroupNode";
+import secrets from "../config.json";
+
+const proxyUrl = secrets["proxy-url"];
 
 const columnXPosition = {
   topics: 100,
@@ -195,7 +198,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/broker");
+        const response = await axios.get(`${proxyUrl}/broker`);
         if (response.data.success) {
           const transformedData = transformApiResponseToData(
             response.data.brokerRes
