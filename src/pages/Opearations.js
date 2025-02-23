@@ -63,6 +63,9 @@ function Operations() {
           partitionNumber: Number(partitionNumber),
         }
       );
+      if (!response.data.success) {
+        throw new Error(response.data.error);
+      }
       console.log(response.data);
       showSuccessToast(
         "Create Topic",
