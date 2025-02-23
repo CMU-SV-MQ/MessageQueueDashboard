@@ -3,7 +3,7 @@ import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import SidebarLink from "./SidebarLink";
 
 import {
-  HiOutlineServer,
+  // HiOutlineServer,
   HiOutlineDatabase,
   HiOutlineChartBar,
   // HiChevronLeft,
@@ -63,16 +63,16 @@ function Header() {
         // display={!collapsed ? "flex" : "none"}
         // p={collapsed ? "0" : "2"} // Adds padding when not collapsed
       >
-        <SidebarLink to="/dashboard" icon={HiOutlineServer}>
+        {/* <SidebarLink to="/dashboard" icon={HiOutlineServer}>
           Broker Management
-        </SidebarLink>
-        <SidebarLink to="/dashboard/relationshipView" icon={HiOutlineChartBar}>
+        </SidebarLink> */}
+        <SidebarLink to="/relationshipView" icon={HiOutlineChartBar}>
           Relationship View
         </SidebarLink>
-        <SidebarLink to="/dashboard/topicDetail" icon={HiOutlineDatabase}>
+        <SidebarLink to="/topicDetail" icon={HiOutlineDatabase}>
           Topic Detail
         </SidebarLink>
-        <SidebarLink to="/dashboard/operations" icon={HiOutlineDatabase}>
+        <SidebarLink to="/operations" icon={HiOutlineDatabase}>
           Operations
         </SidebarLink>
       </VStack>

@@ -1,6 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+// import Dashboard from "./pages/Dashboard";
 // import Monitor from "./pages/Monitor";
 import TopicDetail from "./pages/TopicDetail";
 import RelationshipView from "./pages/RelationshipView";
@@ -9,9 +14,10 @@ import TopicOperations from "./pages/Opearations";
 function App() {
   return (
     <ChakraProvider>
-      <Router basename={"/dashboard"}>
+      <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Navigate to="/operations" />} />
+          {/* <Route path="/" element={<Dashboard />} /> */}
           {/* <Route path="/monitor" element={<Monitor />} /> */}
           <Route path="/topicDetail" element={<TopicDetail />} />
           <Route path="/relationshipView" element={<RelationshipView />} />
