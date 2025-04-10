@@ -6,6 +6,8 @@ import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import Header from "../components/SideMenu";
 import Card from "../components/OperationCard";
 import PageTitle from "../components/PageTitle";
+import ResetStrategyBtn from "../components/ResetStrategyBtn"; 
+
 import {
   Box,
   Flex,
@@ -17,6 +19,7 @@ import {
   NumberInput,
   NumberInputField,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import secrets from "../config.json";
 
@@ -38,6 +41,7 @@ function Operations() {
   const [commitGroupId, setCommitGroupId] = useState("");
   const [commitConsumerId, setCommitConsumerId] = useState("");
   const [commitTopic, setCommitTopic] = useState("");
+  const [partitionStrategy, setPartitionStrategy] = useState("round-robin");
 
   useEffect(() => {
     // This is where you'd fetch data from the API
@@ -171,6 +175,28 @@ function Operations() {
       });
     }
   };
+
+  const updateStrategy = async (newStrategy) => {
+  try {
+    const response = await axios.post(`${proxyUrl}/broker/brokerStrategy/${newStrategy}`);
+    console.log("Strategy updated:", response.data);
+    showSuccessToast(
+      "Strategy Update",
+      `Switched to "${newStrategy}" partition strategy.`
+    );
+  } catch (error) {
+    console.error("Failed to update strategy:", error);
+    toast({
+      title: "Strategy Update Failed",
+      description: error.toString(),
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  }
+};
+
 
   const sidebarWidth = "210px";
   const pageContentPadding = "1.5rem"; // Increase padding here as necessary
@@ -361,6 +387,10 @@ function Operations() {
             </Card>
           </GridItem>
         </Grid>
+        <PageTitle title="Message Related Operations" icon={HiOutlineDatabase} />
+        <Box mb={4}>
+          <ResetStrategyBtn update={updateStrategy} />
+        </Box>
       </Box>
     </Flex>
   );
