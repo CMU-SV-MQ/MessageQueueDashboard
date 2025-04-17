@@ -109,8 +109,15 @@ function Operations() {
   const handlePublishMessage = async () => {
     const url = `${proxyUrl}/producer/messages`;
     try {
+      // fixme
+      let hash = 0;
+      for (let i = 0; i < messageValue.length; i++) {
+        hash = (31 * hash + messageValue.charCodeAt(i)) | 0; // emulate Java hashCode
+      }
+        // fixme
       const response = await axios.post(url, {
-        partitionKey: "absdcd", // Note: property names should be in camelCase
+
+        partitionKey: hash, // Note: property names should be in camelCase
         topic: messageTopic,
         value: messageValue,
       });
