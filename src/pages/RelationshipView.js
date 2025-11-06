@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
@@ -279,7 +281,11 @@ export default function App() {
   return (
     <ChakraProvider>
       <Header />
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div style={{ 
+        marginLeft: "288px", 
+        width: "calc(100vw - 288px)", 
+        height: "100vh" 
+      }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}

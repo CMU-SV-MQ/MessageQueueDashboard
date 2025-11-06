@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
@@ -6,7 +8,9 @@ import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import Header from "../components/SideMenu";
 import Card from "../components/OperationCard";
 import PageTitle from "../components/PageTitle";
-import ResetStrategyBtn from "../components/ResetStrategyBtn"; 
+import ResetStrategyBtn from "../components/ResetStrategyBtn";
+import Tooltip from "@mui/material/Tooltip";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"; 
 
 import {
   Box,
@@ -205,7 +209,7 @@ function Operations() {
 };
 
 
-  const sidebarWidth = "210px";
+  const sidebarWidth = "288px";
   const pageContentPadding = "1.5rem"; // Increase padding here as necessary
   const fixedAddonWidth = "120px";
 
@@ -213,19 +217,32 @@ function Operations() {
     <Flex>
       <Header />
       <Box
-        ml={sidebarWidth}
-        w={`calc(100% - ${sidebarWidth})`}
+        ml={{ base: "0", lg: sidebarWidth }}
+        w={{ base: "100%", lg: `calc(100% - ${sidebarWidth})` }}
         p={pageContentPadding}
       >
         {/* Topic Operations Section */}
-        <PageTitle title="Topic Related Operations" icon={HiOutlineDatabase} />
-        <Box mb={4}>
-          <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+        <Box mb={6}>
+          <Flex alignItems="center" mb={4}>
+            <PageTitle title="Topic Related Operations" icon={HiOutlineDatabase} />
+            <Tooltip
+              title="Create new topics and subscribe consumers to existing topics. Topics organize message streams, while subscriptions enable consumer groups to process messages."
+              arrow
+            >
+              <InfoOutlinedIcon 
+                fontSize="small" 
+                className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                style={{ marginLeft: "8px" }}
+              />
+            </Tooltip>
+          </Flex>
+          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
             <GridItem>
               <Card
                 title="Create Topic"
                 buttonText="Create"
                 onClick={handleCreateTopic}
+                minHeight="180px"
               >
                 <InputGroup mb="2">
                   <InputLeftAddon width={fixedAddonWidth}>
@@ -256,6 +273,7 @@ function Operations() {
                 title="Subscribe to Topic"
                 buttonText="Subscribe"
                 onClick={handleSubscribeToTopic}
+                minHeight="180px"
               >
                 <InputGroup mb="2">
                   <InputLeftAddon width={fixedAddonWidth}>Topic</InputLeftAddon>
@@ -288,11 +306,24 @@ function Operations() {
         </Box>
 
         {/* Message Operations Section */}
-        <PageTitle
-          title="Message Related Operations"
-          icon={HiOutlineDatabase}
-        />
-        <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+        <Box mb={6} mt={8}>
+          <Flex alignItems="center" mb={4}>
+            <PageTitle
+              title="Message Related Operations"
+              icon={HiOutlineDatabase}
+            />
+            <Tooltip
+              title="Publish messages to topics, consume messages from subscribed topics, and commit consumer offsets to track processing progress."
+              arrow
+            >
+              <InfoOutlinedIcon 
+                fontSize="small" 
+                className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                style={{ marginLeft: "8px" }}
+              />
+            </Tooltip>
+          </Flex>
+        <Grid templateColumns="repeat(3, 1fr)" gap={6}>
           <GridItem>
             <Card
               title="Publish Message"
@@ -394,8 +425,23 @@ function Operations() {
             </Card>
           </GridItem>
         </Grid>
-        <PageTitle title="Message Related Operations" icon={HiOutlineDatabase} />
-        <Box mb={4}>
+        </Box>
+        
+        {/* Strategy Section */}
+        <Box mb={6} mt={8}>
+          <Flex alignItems="center" mb={4}>
+            <PageTitle title="Partition Strategy" icon={HiOutlineDatabase} />
+            <Tooltip
+              title="Configure how messages are distributed across partitions. Different strategies affect load balancing and message ordering."
+              arrow
+            >
+              <InfoOutlinedIcon 
+                fontSize="small" 
+                className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                style={{ marginLeft: "8px" }}
+              />
+            </Tooltip>
+          </Flex>
           <ResetStrategyBtn update={updateStrategy} />
         </Box>
       </Box>

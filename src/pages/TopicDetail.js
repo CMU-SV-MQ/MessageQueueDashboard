@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
@@ -7,6 +9,8 @@ import PageTitle from "../components/PageTitle";
 import { HiOutlineDatabase, HiRefresh } from "react-icons/hi";
 import PartitionDetailsModal from "../components/PartitionDetailPopup";
 import { Box, useDisclosure, VStack, Flex, Text } from "@chakra-ui/react";
+import Tooltip from "@mui/material/Tooltip";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import secrets from "../config.json";
 
 const proxyUrl = secrets["proxy-url"];
@@ -17,7 +21,7 @@ function TopicDetail() {
     useState(null);
   const [topics, setTopics] = useState([]);
 
-  const sidebarWidth = "210px";
+  const sidebarWidth = "288px";
 
   const fetchBrokerData = async () => {
     try {
@@ -71,12 +75,24 @@ function TopicDetail() {
       <Header />
       <VStack
         spacing={4}
-        ml={sidebarWidth}
-        w={`calc(100% - ${sidebarWidth})`}
+        ml={{ base: "0", lg: sidebarWidth }}
+        w={{ base: "100%", lg: `calc(100% - ${sidebarWidth})` }}
         p="4"
       >
         <Flex w="100%" px="2rem" flexDirection="column">
-          <PageTitle title="Topic Detail" icon={HiOutlineDatabase} />
+          <Flex alignItems="center" mb={4}>
+            <PageTitle title="Topic Detail" icon={HiOutlineDatabase} />
+            <Tooltip
+              title="View all topics and their partitions. Click on any partition badge to see detailed information including messages, consumer offsets, and processing status."
+              arrow
+            >
+              <InfoOutlinedIcon 
+                fontSize="small" 
+                className="ml-2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                style={{ marginLeft: "8px" }}
+              />
+            </Tooltip>
+          </Flex>
           <Flex wrap="wrap" justify="space-around">
             {topics.map((topic, idx) => (
               <Box

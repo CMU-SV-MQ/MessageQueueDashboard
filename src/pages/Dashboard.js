@@ -18,7 +18,7 @@ function Dashboard() {
   const [, setAliveStatus] = useState([]);
   const [brokers, setBrokers] = useState([]);
 
-  const sidebarWidth = "210px";
+  const sidebarWidth = "288px";
 
   const getNextServerIndex = () => {
     if (brokers.length === 0) {
@@ -189,8 +189,8 @@ function Dashboard() {
       <Header />
       <VStack
         spacing={4}
-        ml={sidebarWidth}
-        w={`calc(100% - ${sidebarWidth})`}
+        ml={{ base: "0", lg: sidebarWidth }}
+        w={{ base: "100%", lg: `calc(100% - ${sidebarWidth})` }}
         p="4"
       >
         <Flex w="100%" px="2rem" flexDirection="column">
