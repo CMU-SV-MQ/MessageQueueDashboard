@@ -5,10 +5,10 @@ import { HiOutlineServer, HiRefresh } from "react-icons/hi";
 import PageTitle from "../components/PageTitle";
 // eslint-disable-next-line no-unused-vars
 import { Box, VStack, Flex, Button, HStack, Spacer } from "@chakra-ui/react";
-import AddBrokerBtn from "../components/AddBrokerBtn.js";
-import BrokerCard from "../components/BrokerCard.js";
-import ResetStrategyBtn from "../components/ResetStrategyBtn.js";
-import Header from "../components/SideMenu.js";
+import AddBrokerBtn from "../components/AddBrokerBtn";
+import BrokerCard from "../components/BrokerCard";
+import ResetStrategyBtn from "../components/ResetStrategyBtn";
+import Header from "../components/SideMenu";
 import secrets from "../config.json";
 
 const proxyUrl = secrets["proxy-url"];
